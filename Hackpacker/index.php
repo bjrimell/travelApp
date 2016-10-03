@@ -1,90 +1,10 @@
-<?php include 'standardHeader.php'; ?>
-<body>
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-    </ol>
+<?php include 'standardHeader.php'; ?> 
+<!DOCTYPE html>
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <img src="https://placehold.it/1200x400?text=Find Your Way" alt="Image">
-        <div class="carousel-caption">
-          <h3>Earn Money by Helping Travellers</h3>
-          <p>Cooperative Travel Tips</p>
-        </div>
-      </div>
+<body ng-app="myApp">
 
-      <div class="item">
-        <img src="https://placehold.it/1200x400?text=Earn Money While You Travel" alt="Image">
-        <div class="carousel-caption">
-          <h3>Crowd-sourced travel advice.</h3>
-          <p>The more helpful your advice, the more you earn!</p>
-        </div>
-      </div>
+<div ng-view></div>
 
-      <div class="item">
-        <img src="https://placehold.it/1200x400?text=Upvote Good Routes" alt="Image">
-        <div class="carousel-caption">
-          <h3>Crowd-sourced travel advice.</h3>
-          <p>The more helpful your advice, the more you earn!</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-</div>
-  
-<div class="container text-center">
-  <div class="row">
-    <div class="col-sm-4">
-        <label for="ex1">Travelling From</label>
-        <input class="form-control" id="ex1" type="text">
-    </div>
-      <div class="col-sm-4">
-        <label for="ex1">Travelling To</label>
-        <input class="form-control" id="ex1" type="text">
-    </div>
-    <div class="col-sm-4">
-          <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-search"></span> Search
-        </button>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-sm-4">
-      <img src="https://placehold.it/150x80?text=Add a Route" class="img-responsive" style="width:100%" alt="Image">
-      <p>Current Project</p>
-    </div>
-    <div class="col-sm-4">
-      <img src="https://placehold.it/150x80?text=Browse by Country" class="img-responsive" style="width:100%" alt="Image">
-      <p>Project 2</p>
-    </div>
-    <div class="col-sm-4">
-      <div class="well">
-                <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-plus"></span> Add Route
-        </button>
-      </div>
-      <div class="well">
-                <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-share-alt"></span> Share
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<script src="js/app.js"></script>
 
 <?php include 'footer.php'; ?>
-

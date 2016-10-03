@@ -1,0 +1,8 @@
+<body>
+<div class="container-fluid">
+	<h1>Journey Breakdown</h1>
+    <!--<div ng-app="myApp" ng-cloak ng-controller="journeyController" id="">-->
+    <div ng-repeat="journeyResult in journeyResults">
+        <h2>{{journeyResult.Origin}}, {{journeyResult.OriginState}}, {{journeyResult.OriginCountry}} to {{journeyResult.Destination}}, {{journeyResult.DestinationState}}, {{journeyResult.DestinationCountry}}.</h2>
+    </div>
+</div>

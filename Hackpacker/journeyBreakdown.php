@@ -1,7 +1,5 @@
-<?php include 'standardHeader.php'; ?>
 <header>
-    <script src="./js/app.js"></script>
-    <script src="./node_modules/angular-route/angular-route.js"></script>
+    <script src="js/app.js"></script>
     </header>
 <body>
 <div class="container-fluid">
@@ -9,25 +7,7 @@
     <div ng-app="myApp" ng-cloak ng-controller="journeyController" id="">
     <div ng-repeat="journeyResult in journeyResults">
         <h2>{{journeyResult.Origin}}, {{journeyResult.OriginState}}, {{journeyResult.OriginCountry}} to {{journeyResult.Destination}}, {{journeyResult.DestinationState}}, {{journeyResult.DestinationCountry}}.</h2>
-        <!-- START OF MAPS CODE -->
-            <!-- END OF MAPS CODE -->
-            <!-- Google Map For Origin -->
-            <div id="floating-panel">
-                <input id="address" type="textbox" value="{{journeyResult.Origin}}, {{journeyResult.OriginState}}">
-                <input id="submit" type="button" value="Geocode">
-            </div>
-            <div id="map"></div>
-                <!-- Google Map For Destination -->
-            <div id="floating-panel">
-                <input id="address" type="textbox" value="{{journeyResult.Destination}}, {{journeyResult.DestinationState}}">
-                <input id="submit" type="button" value="Geocode">
-            </div>
-            <div id="map"></div>
-            </div>
-            
-            <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDjOdT-c-_gDUZxKSrTt1veS3CI2crxYhM&callback=initMap" async defer></script>
-            <script src="js/googleMaps.js"></script>
-        </div>
+    </div>
 	<div ng-app="myApp" ng-cloak ng-controller="journeyController" id="">
             <div class="table-responsive">
 				<table class="table table-bordered table-striped">
@@ -107,10 +87,9 @@
                                 <span class="glyphicon glyphicon-th-list"></span>
                             </td>
                         </tr>
-                        DETAILS CAN GO HERE
+                        <div ng-view></div>
                     </tbody>
 				</table>
 			</div>
 			</div>
 		</div>
-<?php include 'footer.php'; ?>

@@ -6,13 +6,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span> 
       </button>
-      <a class="navbar-brand" href="/Hackpacker/"><?php include './var/websiteName.php' ?></a>
+      <a class="navbar-brand" href="/Hackpacker/#/"><?php include './var/websiteName.php' ?></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-      <li><a href="about.php">How it works</a></li> 
-        <li class="active"><a href="journey.php">All Journeys (Temp)</a></li>
-        <li class=""><a href="#">Find Journeys</a></li>
+      <li><a href="#how_to-earn-money-while-you-travel">How it works</a></li> 
+        <li class="active"><a href="#travel">All Journeys (Temp)</a></li>
+        <li class=""><a href="#journeyBreakdown">Find Journeys</a></li>
         <li class=""><a href="#">Add Journey</a></li>
         <li class=""><a href="#">Top Earners League</a></li>
       </ul>
@@ -23,3 +23,6 @@
     </div>
   </div>
 </nav>
+<header>
+    <script src="js/app.js"></script>
+</header>

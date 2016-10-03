@@ -1,37 +1,40 @@
+var app = angular.module("myApp", ["ngRoute"]);
 
-var app = angular.module("myApp", ['ngRoute'])
-
-
-
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+app.config(function($routeProvider) {
     $routeProvider
-        .when('/',
-        {
-            templateUrl : '/views/home.html',
-            controller : 'mainCtrl'
-        })
-        .when('/journey/:origin/to/:destination',
-        {
-            templateUrl : '/views/about.html',
-            controller : 'mainCtrl'
-        })
-        .when('/journeyBreakdown/:id',
-        {
-            templateUrl : '/journeyBreakdown.php',
-            controller : 'syncCtrl'
-        })
-        .otherwise({
-            redirectTo : '/'
-        });
+    .when("/", {
+        templateUrl : "home.htm"
+    })
+    // Soon the below will not be needed, when it is working with IDs. Keep it for now though as it works!
+    .when("/travel", {
+        templateUrl : "journey.htm",
+        controller : 'journeyController'
+    })
+    .when("/travel-from/:originId/to/:destinationId", {
+        templateUrl : "journey.htm",
+        controller : 'journeyController'
+    })
+    .when("/journeyBreakdown", {
+        templateUrl : "journeyBreakdown.htm",
+        controller : 'journeyController'
+    })
+    .when("/how_to-earn-money-while-you-travel", {
+        templateUrl : "about.htm"
+    })
+    .when("/journey/:journeyId", {
+        templateUrl : "journeyBreakdown.htm",
+        controller : 'journeyBreakdownController'
+    })
+    .otherwise({
+        template : "<h1>D'oh!</h1><p>Error 404! Sorry mate.</p>"
+    });
+});
 
-    if(window.history && window.history.pushState){
-    $locationProvider.html5Mode(true);
-  }
-
-}]);
-
-
-/*var app = angular.module("myApp", []);*/
+app.controller('RedController', function($scope) {
+ 
+    $scope.message = 'This is RedController Screen';
+ 
+});
 
 app.controller('VoteController', function($scope) {
   $scope.changeVote = function(vote, flag){
@@ -48,14 +51,17 @@ app.controller('referenceDataController', function($scope, $http) {
 }
 );
 
- app.controller('journeyController', function($scope, $http) {
+ app.controller('journeyController', function($scope, $http, $routeParams) {
 
-		$http.get("server/selectJourneys.php")
+        $scope.originCity = $routeParams.originId;
+        $scope.destinationCity = $routeParams.destinationId;
+		$http.get("server/selectJourneys.php?originId="+$scope.originCity+"+&destinationId="+$scope.destinationCity)
 		    .then(function (response) {$scope.journeyResults = response.data.records;});
 	});
 
-	app.controller('legController', function($scope, $http) {
+	app.controller('journeyBreakdownController', function($scope, $http, $routeParams) {
 
+        $scope.journeyId = $routeParams.journeyId;
 		$http.get("server/selectJourneyegs.php?journeyId=$scope.journeyId")
 		    .then(function (response) {$scope.seatToEdit = response.data.records;});
 	});
