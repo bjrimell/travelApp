@@ -1,73 +1,233 @@
 <body>
 <div class="container-fluid">
-    <h1>Travel from {{originCity}} to {{destinationCity}}.</h1>
-            <div class="table-responsive">
-				<table class="table table-bordered table-striped">
-					<thead>
-				        <tr>
-                            <td>
-                                <a href="#" ng-click="sortType = 'Row'; sortReverse = !sortReverse">
-                                <b>Community Rating</b>
-                                <span ng-show="sortType == 'Row' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
-                                <span ng-show="sortType == 'Row' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <b>Travelled</b>
-                            </td>
-                            <td>
-                                <b>Journey Duration</b>
-                            </td>
-                            <td>
-                                <a href="#" ng-click="sortType = 'Band'; sortReverse = !sortReverse">
-                                <b>Notes</b>
-                                <span ng-show="sortType == 'Band' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
-                                <span ng-show="sortType == 'Band' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="#" ng-click="sortType = 'Row'; sortReverse = !sortReverse">
-                                <b>Price Paid Per Person</b>
-                                <span ng-show="sortType == 'Row' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
-                                <span ng-show="sortType == 'Row' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
-                                </a>
-                            </td>
-				        </tr>
-				    </thead>
-                    <tbody>
-                        <tr ng-repeat="journeyResult in journeyResults | orderBy:sortType:sortReverse  | filter:{ Preference: searchTermPreference }" class="w3-padding-hor-16" ng-model="journeyResult">
-                            <td>
-                                <div ng-controller="VoteController">
-                                <h1><b><span>{{journeyResult.PositiveVotes - journeyResult.NegativeVotes}}</span></b></h1>
-                                <i title="Up Votes" ng-click="changeVote(vote, 'up')" class="fa fa-arrow-circle-up fa-2x" ng-class="{true:'up', false:''}[vote=='up']"></i>
-                                <i title="Down Votes" ng-click="changeVote(vote, 'down')" class="fa fa-arrow-circle-down fa-2x"  ng-class="{true:'down', false:''}[vote=='down']"></i>
-                                </div>
-                            </td>
-                            <td>
-                                <i>3 days ago.</i>
-                            </td>
-                            <td>
-                                <i>6.5 hours</i>
-                            </td>
-                            <td>
-                                I left at <b>{{journeyResult.LeaveDateTime}}</b> and arrived at <b>{{journeyResult.ArrivalDateTime}}</b>.
-                                <br><br>
-                                {{journeyResult.Instruction}}
-                                <br><br>
-                                <a href ="#/journey/{{journeyResult.Id}}" type="button" class="btn btn-success" data-toggle="collapse" data-target="#demo">
-                                    <span class="glyphicon glyphicon-collapse-down"></span> Show Journey Details
-                                </button>
-                            </td>
-                            <td>
-                                <i>50,000 USD.</i>
-                            </td>
-                        </tr>
-                        <div ng-show="!journeyResults.length">
-                            <h3>No results found.</h3>
-                            <h2>Be the first to add the details of a journey and earn cash while you travel!</h2>
-                            <h1>Add here form to enter a new journey</h1>
+	<h1><p align="center">- ADVERT -</p></h1>
+    <div class="row">
+            <div class="col-lg-2">
+                SOMETHING HERE ?
+            </div>
+            <div class="col-lg-8">
+                <div ng-repeat="journeyResult in journeyResults">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" ng-if="journeyResult.Direct=='0'">
+                            <h2>Travel from {{journeyResult.Origin}}, {{journeyResult.OriginState}} <span class="flag-icon flag-icon-{{journeyResult.OriginCountryCode}}"></span> to {{journeyResult.Destination}}, {{journeyResult.DestinationState}} <span class="flag-icon flag-icon-{{journeyResult.DestinationCountryCode}}"></span> - <span>(Multi-step Route)</span></h2>
+                            Journey started: {{journeyResult.LeaveDateTime}}<br>Journey ended: {{journeyResult.ArrivalDateTime}}
                         </div>
-                    </tbody>
-				</table>
-			</div>
-		</div>
+                        <div class="panel-heading" ng-if="journeyResult.Direct=='1'">
+                            <h2><span class="{{journeyResult.ModeIcon}}"></span> {{journeyResult.ModeOfTransport}} from {{journeyResult.Origin}}, {{journeyResult.OriginState}} <span class="flag-icon flag-icon-{{journeyResult.OriginCountryCode}}"></span> to {{journeyResult.Destination}}, {{journeyResult.DestinationState}} <span class="flag-icon flag-icon-{{journeyResult.DestinationCountryCode}}"></span> - <span>(Direct Route)</span></h2>
+                            Journey started: {{journeyResult.LeaveDateTime}}<br>Journey ended: {{journeyResult.ArrivalDateTime}}
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-comment"></span> Summary:</h4> "{{journeyResult.Instruction}}"
+                                </div>
+                                <div class="col-lg-6"> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6" ng-if="journeyResult.Direct=='0'">
+                                    <h4><span class="glyphicon glyphicon-list"></span> Steps:</h4>
+                                        <ul>
+                                            <li><a href="#/travel-from-Corozal-to-Sincelejo">Corozal to Sincelejo</a></li>
+                                            <li><a href="#/travel-from-Sincelejo-to-Monteria">Sincelejo to Monteria</a></li>
+                                            <li><a href="#/travel-from-Monteria-to-Bogota">Monteria to Bogota</a></li>
+                                        </ul>
+                                </div>
+                                <div class="col-lg-6"> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-calendar"></span> Journey Date:</h4> <i>3 hours</i>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-time"></span> Journey Duration:</h4> <i>3 hours</i>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="fa fa-money"></span> Price Paid:</h4> {{journeyResult.Price}} {{journeyResult.CurrencyUsed}}
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-user"></span> Added by:</h4> {{journeyResult.Author}}
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <h4><b><span class="glyphicon glyphicon-stats"></span> Community Feedback</b></h4>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#addJourney">
+                                        <span class="glyphicon glyphicon-thumbs-up"> </span> Upvote
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalHorizontal">
+                                        <span class="glyphicon glyphicon-thumbs-down"> </span> Downvote
+                                    </button>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <h3><span class="glyphicon glyphicon-thumbs-up"></span> {{journeyResult.PositiveVotes}} upvotes</h3>
+                                    <h3><span class="glyphicon glyphicon-thumbs-down"></span> {{journeyResult.NegativeVotes}} downvotes</h3>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h3><span class="glyphicon glyphicon-envelope"></span> Share via email</h3>
+                                    <h3><span class="fa fa-facebook"></span> Share on Facebook</h3>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h3><span class="fa fa-twitter"></span> Share via Twitter</h3>
+                                    <h3><span class="fa fa-whatsapp"></span> Share on Whatsapp</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog" 
+                        aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <button type="button" class="close" 
+                                    data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        Tell us about your {{journeyResult.ModeOfTransport}} journey from {{journeyResult.Origin}} to {{journeyResult.Destination}}
+                                    </h4>
+                                </div> 
+                                <!-- Modal Body -->
+                                <div class="modal-body">                   
+                                    <form class="form-horizontal" role="form">
+                                        <div class="row">
+                                            <div class="radio col-lg-12">
+                                                <h4>Journey Type</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="radio col-lg-12">
+                                                <label>
+                                                    <input name="collapseGroup" type="radio" data-toggle="collapse" data-target="#collapseOne" checked="checked"/>
+                                                    <b>Direct route</b> - only one step was involved in the journey.
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="radio col-lg-12">
+                                                <label>
+                                                    <input name="collapseGroup" type="radio" data-toggle="collapse" data-target="#collapseOne"/>
+                                                <b>Indirect route</b> - multiple steps were involved in the journey.</label>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group" id="accordion">
+                                            <div class="panel panel-default">
+                                                <div id="collapseOne" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                    <p>Content</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="radio col-lg-12">
+                                                <h4>How did you get there?</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Private Taxi</label>
+                                            </div>
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Community Taxi</label>
+                                            </div>
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-plane"></span> Airplane</label>
+                                            </div>
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Bus</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Train</label>
+                                            </div>
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Boat</label>
+                                            </div>
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Coach</label>
+                                            </div>
+                                            <div class="radio col-lg-3">
+                                                <label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Walk</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <h4><span class="glyphicon glyphicon-calendar"></span> Journey Start Date:</h4>
+                                                <input type="text" id ="dateSelecter" value="{{journeyResult.LeaveDateTime}}" />
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <h4><span class="glyphicon glyphicon-calendar"></span> Journey End Date:</h4>
+                                                <input type="text" id ="dateSelecter" value="{{journeyResult.ArrivalDateTime}}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <h4><span class="fa fa-money"></span> Price Paid:</h4>
+                                                <input type="number" min="0" step="1" id ="pricePaid" value="{{journeyResult.Price}}" />
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <h4><span class="fa fa-money"></span> Currency Used:</h4>
+                                                <select class="form-control input-sm" id="selectCurrencyModal">
+                                                    <option>USD</option>
+                                                    <option>COP</option>
+                                                    <option>GBP</option>
+                                                    <option>EUR</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h4><span class="glyphicon glyphicon-comment"></span> Journey Comments:</h4> <textarea class="form-control" rows="2" id="inputInstructions" placeholder="Write useful instructions here..."></textarea>
+                                            </div>
+                                            <div class="col-lg-6"> 
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Modal Footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Modal -->
+                </div>
+                <div ng-show="!journeyResults.length">
+                    <h3>No results found.</h3>
+                    <h2>Be the first to add the details of a journey and earn cash while you travel!</h2>
+                </div>
+        </div>
+        <div class="col-lg-2">
+            SOMETHING HERE ?
+        </div>
+    </div>
+    <h1><p align="center">ADVERT</p></h1>
+</div>

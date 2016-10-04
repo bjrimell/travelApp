@@ -5,23 +5,14 @@ app.config(function($routeProvider) {
     .when("/", {
         templateUrl : "home.htm"
     })
-    // Soon the below will not be needed, when it is working with IDs. Keep it for now though as it works!
-    .when("/travel", {
+    .when("/travel-from-:originId-to-:destinationId", {
         templateUrl : "journey.htm",
-        controller : 'journeyController'
-    })
-    .when("/travel-from/:originId/to/:destinationId", {
-        templateUrl : "journey.htm",
-        controller : 'journeyController'
-    })
-    .when("/journeyBreakdown", {
-        templateUrl : "journeyBreakdown.htm",
         controller : 'journeyController'
     })
     .when("/how_to-earn-money-while-you-travel", {
         templateUrl : "about.htm"
     })
-    .when("/journey/:journeyId", {
+    .when("/:description/:journeyId", {
         templateUrl : "journeyBreakdown.htm",
         controller : 'journeyBreakdownController'
     })
@@ -62,6 +53,6 @@ app.controller('referenceDataController', function($scope, $http) {
 	app.controller('journeyBreakdownController', function($scope, $http, $routeParams) {
 
         $scope.journeyId = $routeParams.journeyId;
-		$http.get("server/selectJourneyegs.php?journeyId=$scope.journeyId")
-		    .then(function (response) {$scope.seatToEdit = response.data.records;});
+		$http.get("server/selectJourneyLegs.php?journeyId="+$scope.journeyId)
+		    .then(function (response) {$scope.journeyDetail = response.data.records;});
 	});

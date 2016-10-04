@@ -1,0 +1,105 @@
+<body>
+<div class="container-fluid">
+    <h1>How to travel from {{originCity}} to {{destinationCity}}.</h1>
+            <div class="table-responsive" ng-show="journeyResults.length">
+				<table class="table table-bordered table-striped">
+					<thead>
+				        <tr>
+                            <td>
+                                <a href="#" ng-click="sortType = 'Row'; sortReverse = !sortReverse">
+                                <b>Community Rating</b>
+                                <span ng-show="sortType == 'Row' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                                <span ng-show="sortType == 'Row' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <b>Travelled</b>
+                            </td>
+                            <td>
+                                <b>Journey Duration</b>
+                            </td>
+                            <td>
+                                <a href="#" ng-click="sortType = 'Band'; sortReverse = !sortReverse">
+                                <b>Notes</b>
+                                <span ng-show="sortType == 'Band' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                                <span ng-show="sortType == 'Band' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" ng-click="sortType = 'Row'; sortReverse = !sortReverse">
+                                <b>Price Paid Per Person</b>
+                                <span ng-show="sortType == 'Row' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                                <span ng-show="sortType == 'Row' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                                </a>
+                            </td>
+				        </tr>
+				    </thead>
+                    <tbody>
+                        <tr ng-repeat="journeyResult in journeyResults | orderBy:sortType:sortReverse  | filter:{ Preference: searchTermPreference }" class="w3-padding-hor-16" ng-model="journeyResult">
+                            <td>
+                                <div ng-controller="VoteController">
+                                <h1><b><span>{{journeyResult.PositiveVotes - journeyResult.NegativeVotes}}</span></b></h1>
+                                <i title="Up Votes" ng-click="changeVote(vote, 'up')" class="fa fa-arrow-circle-up fa-2x" ng-class="{true:'up', false:''}[vote=='up']"></i>
+                                <i title="Down Votes" ng-click="changeVote(vote, 'down')" class="fa fa-arrow-circle-down fa-2x"  ng-class="{true:'down', false:''}[vote=='down']"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <i>3 days ago.</i>
+                            </td>
+                            <td>
+                                <i>6.5 hours</i>
+                            </td>
+                            <td>
+                                I left at <b>{{journeyResult.LeaveDateTime}}</b> and arrived at <b>{{journeyResult.ArrivalDateTime}}</b>.
+                                <br><br>
+                                {{journeyResult.Instruction}}
+                                <br><br>
+                                <a href ="#/travel-from-{{journeyResult.Origin}}-to-{{journeyResult.Destination}}/{{journeyResult.Id}}" type="button" class="btn btn-success" data-toggle="collapse" data-target="#demo">
+                                    <span class="glyphicon glyphicon-collapse-down"></span> Show Journey Details
+                                </button>
+                            </td>
+                            <td>
+                                <i>50,000 USD.</i>
+                            </td>
+                        </tr>
+                    </tbody>
+				</table>
+			</div>
+            <div ng-show="!journeyResults.length">
+                <h3>No results found.</h3>
+                <h2>Be the first to add the details of a journey and earn cash while you travel!</h2>
+            </div>
+            <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#addJourney">
+                <span class="glyphicon glyphicon-collapse-down"></span> Add Your Journey
+            </button>
+            <div id="addJourney" class="collapse">
+                <form>
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label for="origin">Origin:</label>
+                            <input type="text" class="form-control" id="origin" value="{{originCity}}">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="destination">Final Destination:</label>
+                            <input type="text" class="form-control" id="destination" value="{{destinationCity}}">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="countrySelect">What country did your journey start in?</label>
+                            <select class="form-control" id="countrySelect">
+                                <option>Please select...</option>
+                                <option>Colombia</option>
+                                <option>United Kingdom</option>
+                                <option>Panama</option>
+                                <option>Mexico</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">My journey ended in the same country.</label>
+                            </div>
+                        </div>
+                    </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+		</div>

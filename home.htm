@@ -47,16 +47,14 @@
   <div class="row">
     <div class="col-sm-4">
         <label for="ex1">Travelling From</label>
-        <input class="form-control" id="ex1" type="text">
+        <input class="form-control" id="ex1" type="text" ng-model="originCity">
     </div>
       <div class="col-sm-4">
         <label for="ex1">Travelling To</label>
-        <input class="form-control" id="ex1" type="text">
+        <input class="form-control" id="ex1" type="text" ng-model="destinationCity">
     </div>
     <div class="col-sm-4">
-          <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-search"></span> Search
-        </button>
+      <a href="#/travel-from-{{originCity}}-to-{{destinationCity}}" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</a>
     </div>
   </div>
   <br>

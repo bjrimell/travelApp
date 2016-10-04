@@ -30,3 +30,11 @@ footer {
 .down{
   color:red;
 }
+
+input[type="number"] {
+   width:75px;
+}
+
+#selectCurrencyModal{
+ width:50px;   
+}

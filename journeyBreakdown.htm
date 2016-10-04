@@ -1,8 +1,128 @@
 <body>
 <div class="container-fluid">
 	<h1>Journey Breakdown</h1>
-    <!--<div ng-app="myApp" ng-cloak ng-controller="journeyController" id="">-->
-    <div ng-repeat="journeyResult in journeyResults">
-        <h2>{{journeyResult.Origin}}, {{journeyResult.OriginState}}, {{journeyResult.OriginCountry}} to {{journeyResult.Destination}}, {{journeyResult.DestinationState}}, {{journeyResult.DestinationCountry}}.</h2>
+    <div ng-repeat="journeyResult in journeyDetail">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2><span class="{{journeyResult.ModeIcon}}"></span> {{journeyResult.ModeOfTransport}} from {{journeyResult.Origin}}, {{journeyResult.OriginState}} <span class="flag-icon flag-icon-{{journeyResult.OriginCountryCode}}"></span> to {{journeyResult.Destination}}, {{journeyResult.DestinationState}} <span class="flag-icon flag-icon-{{journeyResult.DestinationCountryCode}}"></span> - <span>{{journeyResult.Direct ? '(Direct Route)' : '(Multi-step Route)'}}</span></h2>
+                Journey started: {{journeyResult.LeaveDateTime}}<br>Journey ended: {{journeyResult.ArrivalDateTime}}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><span class="glyphicon glyphicon-comment"></span> Instructions/Notes:</h4> "{{journeyResult.Instruction}}"
+                    </div>
+                    <div class="col-lg-6"> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><span class="glyphicon glyphicon-calendar"></span> Journey Date:</h4> <i>3 hours</i>
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><span class="glyphicon glyphicon-time"></span> Journey Duration:</h4> <i>3 hours</i>
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><span class="glyphicon glyphicon-piggy-bank"></span> Price Paid:</h4> {{journeyResult.Price}} {{journeyResult.CurrencyCode}}
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4>Added by:</h4> {{journeyResult.Author}}
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <h4><b><span class="glyphicon glyphicon-stats"></span> Community ratings</b></h4>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#addJourney">
+                            <span class="glyphicon glyphicon-thumbs-up"> </span> Upvote
+                        </button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalHorizontal">
+                            <span class="glyphicon glyphicon-thumbs-down"> </span> Downvote
+                        </button>
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div>
+                <h2><span class="glyphicon glyphicon-thumbs-up"></span> {{journeyResult.PositiveVotes}} upvotes</h2>
+                <h2><span class="glyphicon glyphicon-thumbs-down"></span> {{journeyResult.NegativeVotes}} downvotes</h2>(<a href="">see alternative suggestions</a>)
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog" 
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" 
+                        data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Tell us about your {{journeyResult.ModeOfTransport}} journey from {{journeyResult.Origin}} to {{journeyResult.Destination}}
+                        </h4>
+                    </div> 
+                    <!-- Modal Body -->
+                    <div class="modal-body">                   
+                        <form class="form-horizontal" role="form">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4><span class="glyphicon glyphicon-comment"></span> Instructions/Notes:</h4> <textarea class="form-control" rows="2" id="inputInstructions" placeholder="Write useful instructions here..."></textarea>
+                                </div>
+                                <div class="col-lg-6"> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-calendar"></span> Journey Start Date:</h4>
+                                    <input type="text" id ="dateSelecter" value="{{journeyResult.LeaveDateTime}}" />
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-calendar"></span> Journey End Date:</h4>
+                                    <input type="text" id ="dateSelecter" value="{{journeyResult.ArrivalDateTime}}" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-piggy-bank"></span> Price Paid:</h4>
+                                    <input type="number" min="0" step="1" id ="pricePaid" value="{{journeyResult.Price}}" />
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-piggy-bank"></span> Currency Used:</h4>
+                                    <select class="form-control input-sm" id="selectCurrencyModal">
+                                        <option>USD</option>
+                                        <option>COP</option>
+                                        <option>GBP</option>
+                                        <option>EUR</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Modal -->
     </div>
 </div>

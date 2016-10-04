@@ -5,6 +5,6 @@
 
 <div ng-view></div>
 
-<script src="js/app.js"></script>
+<!--<script src="js/app.js"></script>-->
 
 <?php include 'footer.php'; ?>
