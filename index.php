@@ -3,8 +3,6 @@
 
 <body ng-app="myApp">
 
-<div ng-view></div>
-
-<!--<script src="js/app.js"></script>-->
+<div ui-view></div>
 
 <?php include 'footer.php'; ?>

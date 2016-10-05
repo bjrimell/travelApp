@@ -1,8 +1,7 @@
 <?php
 require_once 'connectToDb.php'; //connect to DB
 
-$originId= $_GET['originId'];
-$destinationId= $_GET['destinationId'];
+//$originId= $_GET['originId'];
 
 $result = $conn->query("SELECT
 author.username AS 'Author',
@@ -34,7 +33,7 @@ INNER JOIN states AS destinationState ON destinationCity.state_id = destinationS
 INNER JOIN countries AS destinationCountry ON destinationState.country_id = destinationCountry.Id
 LEFT JOIN Mode m ON js.Mode = m.Id
 INNER JOIN user AS author ON author.username = js.authorId
-WHERE originCity.name = '$originId' AND destinationCity.name = '$destinationId';");
+WHERE js.ParentId = '1';");
 $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";}
@@ -57,27 +56,9 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $outp .= '"Price":"'  . $rs["Price"] . '",';
     $outp .= '"CurrencyUsed":"'  . $rs["CurrencyUsed"] . '",';
     $outp .= '"LeaveDateTime":"'  . $rs["LeaveDateTime"] . '",';
-    // Find children for this row      
-        $subResult = $conn->query("SELECT js.Id,
-        originCity.Name AS 'Origin', destinationCity.Name AS 'Destination' FROM JourneySuggestion js
-        INNER JOIN cities AS originCity ON js.Origin = originCity.Id
-        INNER JOIN cities AS destinationCity ON js.Destination = destinationCity.Id");
-        $subOutp = "";
-        while($subRs = $subResult->fetch_array(MYSQLI_ASSOC)) {
-        if ($subOutp != "") {$subOutp .= ",";}
-        $subOutp .= '{"Id":"'  . $subRs["Id"] . '",';
-        $subOutp .= '"Origin":"'  . $subRs["Origin"] . '",';
-        $subOutp .= '"Destination":"'  . $subRs["Destination"] . '"}';
-
-    } //end of subquery loop
-    $outp .= '"Children": [' . $subOutp . '],';
     $outp .= '"ArrivalDateTime":"'  . $rs["ArrivalDateTime"] . '"}';
-
-
 }
-
 $outp ='{"records":['.$outp.']}';
-
 $conn->close();
 echo($outp);
 ?>

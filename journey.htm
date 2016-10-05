@@ -1,4 +1,3 @@
-<body>
 <div class="container-fluid">
 	<h1><p align="center">- ADVERT -</p></h1>
     <div class="row">
@@ -25,12 +24,16 @@
                                 </div>
                             </div>
                             <div class="row">
+
                                 <div class="col-lg-6" ng-if="journeyResult.Direct=='0'">
-                                    <h4><span class="glyphicon glyphicon-list"></span> Steps:</h4>
+                                    <h4><span class="glyphicon glyphicon-list"></span> Included Steps:</h4>
+                                    {{journeyResults.children}}
+                                    <!-- journey steps -->
                                         <ul>
-                                            <li><a href="#/travel-from-Corozal-to-Sincelejo">Corozal to Sincelejo</a></li>
-                                            <li><a href="#/travel-from-Sincelejo-to-Monteria">Sincelejo to Monteria</a></li>
-                                            <li><a href="#/travel-from-Monteria-to-Bogota">Monteria to Bogota</a></li>
+                                            <li ng-repeat="child in journeyResult.Children">
+                                                <a href="#/travel-from-{{child.Origin}}-to-{{child.Destination}}">
+                                                {{child.Origin}} to {{child.Destination}}</a>
+                                            </li>
                                         </ul>
                                 </div>
                                 <div class="col-lg-6"> 
@@ -189,7 +192,7 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <h4><span class="fa fa-money"></span> Price Paid:</h4>
-                                                <input type="number" min="0" step="1" id ="pricePaid" value="{{journeyResult.Price}}" />
+                                                <!--<input type="number" min="0" step="1" id ="pricePaid" value="{{journeyResult.Price}}" />-->
                                             </div>
                                             <div class="col-lg-6">
                                                 <h4><span class="fa fa-money"></span> Currency Used:</h4>

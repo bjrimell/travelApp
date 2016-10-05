@@ -21,7 +21,7 @@
       <form class="navbar-form" role="search">
         <input class="form-control" id="ex1" type="text" ng-model="originCity" placeholder="Travelling from...">
         <input class="form-control" id="ex1" type="text" ng-model="destinationCity" placeholder="Travelling to...">
-        <a href="#/travel-from-{{originCity}}-to-{{destinationCity}}" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</a>
+        <a ui-sref="journeyResults({ originId: originCity, destinationId: destinationCity })" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</a>
       </form>
     </div>
   </div>
