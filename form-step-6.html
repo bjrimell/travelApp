@@ -1,0 +1,52 @@
+<!-- form-payment.html -->
+<div class="text-center">
+    <div class="row">
+        <div class="col-lg-8">
+            <h4>You travelled from <b>{{formData.origin}}</b> in <b>{{formData.originCountry}}</b> to <b>{{formData.destination}}</b> in <b>{{formData.destinationCountry}}</b>.</h4>
+        </div>
+        <div class="col-lg-4">
+            <a ui-sref="form.step-2" class="btn btn-info">
+            <span class="glyphicon glyphicon-pencil"></span> Edit 
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <h4>You travelled by <b>{{formData.ModeOfTransport}}.</h4>     
+        </div>
+        <div class="col-lg-4">
+            <a ui-sref="form.step-3" class="btn btn-info">
+            <span class="glyphicon glyphicon-pencil"></span> Edit 
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <h4>You left at <b>{{formData.leaveHour}}:{{formData.leaveMinute}}</b> on <b>{{formData.leaveMonth}} {{formData.leaveDay}} {{formData.leaveYear}}</b> and arrived at <b>{{formData.leaveHour}}:{{formData.leaveMinute}}</b> on <b>{{formData.leaveMonth}} {{formData.leaveDay}} {{formData.leaveYear}}</b>.</h4>     
+        </div>
+        <div class="col-lg-4">
+            <a ui-sref="form.step-4" class="btn btn-info">
+            <span class="glyphicon glyphicon-pencil"></span> Edit 
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <h4>You paid <b>{{formData.Price}}</b> in <b>{{formData.CurrencyUsed}}</b>.</h4>     
+        </div>
+        <div class="col-lg-4">
+            <a ui-sref="form.step-5" class="btn btn-info">
+            <span class="glyphicon glyphicon-pencil"></span> Edit 
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4><span class="glyphicon glyphicon-comment"></span> Journey Comments:</h4> <textarea class="form-control" rows="3" id="inputInstructions" placeholder="Write useful tips here..." ng-model="formData.Instructions"></textarea>
+        </div>
+        <div class="col-lg-6"> 
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-cloud-upload"></span> Submit Journey</button>
+</div>

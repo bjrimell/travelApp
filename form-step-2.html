@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div>
+          <div>Journey Start: {{chosenOriginPlace}}</div>
+          <!--Everything: {{chosenOriginPlaceDetails}}-->
+          {{formData.originCityId = chosenOriginPlaceDetails.place_id;""}}
+          {{formData.originCityName = chosenOriginPlace;""}}
+          <div><input ng-model="chosenOriginPlace" details="chosenOriginPlaceDetails" googleplace/></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+        <div>
+          <div>Journey End: {{chosenDestinationPlace}}</div>
+          <!--Everything: {{chosenDestinationPlaceDetails}}-->
+          {{formData.destinationCityId = chosenDestinationPlaceDetails.place_id;""}}
+          {{formData.destinationCityName = chosenDestinationPlace;""}}
+          <div><input ng-model="chosenDestinationPlace" details="chosenDestinationPlaceDetails" googleplace/></div>
+      </div>
+    </div>
+</div>

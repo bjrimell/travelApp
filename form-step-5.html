@@ -1,0 +1,36 @@
+<!-- form-profile.html -->
+
+<div class="form-group text-center">
+    <div class="row">
+        <div class="col-lg-6">
+            <h4><span class="fa fa-money"></span> Price Paid:</h4>
+            <input type="text" ng-model="formData.Price"/>
+        </div>
+        <div class="col-lg-6">
+            <h4><span class="fa fa-money"></span> Currency Used:</h4>
+            <select class="form-control input-sm" id="selectCurrencyModal" ng-model="formData.CurrencyUsed">
+                <option id="USD" value="USD">USD</option>
+                <option id="COP" value="COP">COP</option>
+                <option>GBP</option>
+                <option>EUR</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-4">
+        <a ui-sref="form.step-4" class="btn btn-block btn-warning">
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
+        </a>
+    </div>
+    <div class="col-lg-4">
+        <a ui-sref="form.step-6" class="btn btn-block btn-success">
+        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>

@@ -37,6 +37,7 @@ INNER JOIN user AS author ON author.username = js.authorId
 WHERE originCity.name = '$originId' AND destinationCity.name = '$destinationId';");
 $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+    $parentId = $rs['Id'];
     if ($outp != "") {$outp .= ",";}
     $outp .= '{"Id":"'  . $rs["Id"] . '",';
     $outp .= '"Origin":"'  . $rs["Origin"] . '",';
@@ -59,9 +60,12 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $outp .= '"LeaveDateTime":"'  . $rs["LeaveDateTime"] . '",';
     // Find children for this row      
         $subResult = $conn->query("SELECT js.Id,
-        originCity.Name AS 'Origin', destinationCity.Name AS 'Destination' FROM JourneySuggestion js
+        originCity.Name AS 'Origin',
+        destinationCity.Name AS 'Destination'
+        FROM JourneySuggestion js
         INNER JOIN cities AS originCity ON js.Origin = originCity.Id
-        INNER JOIN cities AS destinationCity ON js.Destination = destinationCity.Id");
+        INNER JOIN cities AS destinationCity ON js.Destination = destinationCity.Id
+        WHERE js.parentId = '$parentId';");
         $subOutp = "";
         while($subRs = $subResult->fetch_array(MYSQLI_ASSOC)) {
         if ($subOutp != "") {$subOutp .= ",";}

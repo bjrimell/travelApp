@@ -38,3 +38,31 @@ input[type="number"] {
 #selectCurrencyModal{
  width:50px;   
 }
+
+#selectCountryModal{
+ width:200px;   
+}
+
+#selectTime{
+ width:50px;   
+}
+
+#selectMinute{
+ width:50px;   
+}
+
+#selectHour{
+ width:50px;   
+}
+
+#selectYear{
+ width:100px;   
+}
+
+#selectMonth{
+ width:120px;   
+}
+
+#selectDay{
+ width:50px;   
+}

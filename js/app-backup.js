@@ -1,35 +1,5 @@
 //var app = angular.module("myApp", ["ngRoute", "ui.router"]);
-var app = angular.module("myApp", ['ngAnimate', 'ngSanitize', "ui.router", "angular.step", 'mgcrea.ngStrap']);
-
-app.directive('googleplace', function() {
-    return {
-        require: 'ngModel',
-        scope: {
-            ngModel: '=',
-            details: '=?'
-        },
-        link: function(scope, element, attrs, model) {
-            var options = {
-                types: [],
-                componentRestrictions: {}
-            };
-            scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
-
-            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
-                scope.$apply(function() {
-                    scope.details = scope.gPlace.getPlace();
-                    model.$setViewValue(element.val());                
-                });
-            });
-        }
-    };
-});
-
-/*
-app.controller('MyCtrl', function($scope, $http) {
-    $scope.gPlace;
-})
-*/
+var app = angular.module("myApp", ["ui.router", "angular.step", 'mgcrea.ngStrap']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
     
@@ -183,26 +153,10 @@ app.controller('referenceDataController', function($scope, $http) {
     };
 });
 
-app.controller('formController', function($scope, $templateCache, $http) {
-
-/*
-$scope.selectedAddress = '';
-  $scope.getAddress = function(viewValue) {
-    var params = {address: viewValue, sensor: false};
-    return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {params: params})
-    .then(function(res) {
-      return res.data.results;
-    });
-      };
-
-*/
-
+app.controller('formController', function($scope, $http) {
+    
     // we will store all of our form data in this object
     $scope.formData = {
-        "originCityId" : "",
-        "originCityName" : "",
-        "destinationCityId" : "",
-        "destinationCityName" : "",
         "leaveDate" : "today",
         "leaveDay" : "01",
         "leaveMonth" : "January",
@@ -219,8 +173,6 @@ $scope.selectedAddress = '';
         "Direct" : true,
         "ModeOfTransport" : "shared taxi",
         "CurrencyUsed" : "USD"};
-
-    $scope.formData.Dunno = $scope.gPlace;
     
     // function to process the form
     $scope.processForm = function() {
@@ -333,7 +285,6 @@ $scope.selectedAddress = '';
 		(function(data){
 		  		});
     };
-
 });
 
 /**
@@ -490,30 +441,12 @@ angular.module('angular.step', [])
     };
 }]);
 
-'use strict';
+	/*
+    app.controller('journeyBreakdownController', function($scope, $http, $routeParams) {
 
-angular.module('mgcrea.ngStrapDocs')
+        $scope.journeyId = $routeParams.journeyId;
+		$http.get("server/selectJourneyLegs.php?journeyId="+$scope.journeyId)
+		    .then(function (response) {$scope.journeyDetail = response.data.records;});
 
-.controller('TypeaheadDemoCtrl', function($scope, $templateCache, $http) {
-
-  $scope.selectedState = '';
-  $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-
-  $scope.selectedIcon = '';
-  $scope.icons = [
-    {value: 'Gear', label: '<i class="fa fa-gear"></i> Gear'},
-    {value: 'Globe', label: '<i class="fa fa-globe"></i> Globe'},
-    {value: 'Heart', label: '<i class="fa fa-heart"></i> Heart'},
-    {value: 'Camera', label: '<i class="fa fa-camera"></i> Camera'}
-  ];
-
-  $scope.selectedAddress = '';
-  $scope.getAddress = function(viewValue) {
-    var params = {address: viewValue, sensor: false};
-    return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {params: params})
-    .then(function(res) {
-      return res.data.results;
-    });
-  };
-
-});
+	});
+    */

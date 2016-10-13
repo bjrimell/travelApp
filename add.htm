@@ -1,0 +1,170 @@
+<div id="content" style="margin: 20px">
+    <div class="container-fluid">
+        <div ui-view></div>
+        <div class="row">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-8">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100" style="width:25%">
+                        25% Complete
+                    </div>
+                </div>
+                <stepset next-text="Next" previous-text="Previous" submit-text="Submit" submit-action="testSubmit">
+                    <form class="form-horizontal" role="form" ng-controller="addJourneyController" ng-submit="submit()">    
+                        <step title="Tell us about your journey" description="You will be able to tell us more details later.">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4><span class="glyphicon glyphicon-globe"></span> Where did your journey start?</h4>
+                                <select class="form-control input-lg" id="selectCountryModal">
+                                    <option>Albania</option>
+                                    <option>Colombia</option>
+                                    <option>France</option>
+                                    <option>Panama</option>
+                                    <option>United Kingdom</option>
+                                    <option>Zimbabwe</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4><span class="glyphicon glyphicon-globe"></span> Where did your journey end?</h4>
+                                <select class="form-control input-lg" id="selectCountryModal" disabled="disabled">
+                                    <option>Albania</option>
+                                    <option>Colombia</option>
+                                    <option>France</option>
+                                    <option>Panama</option>
+                                    <option>United Kingdom</option>
+                                    <option>Zimbabwe</option>
+                                </select>
+                                <label><input type="checkbox" value="" checked="checked"> Journey started & ended in same country.</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4><span class="glyphicon glyphicon-font"></span> Start Town:</h4>
+                                <input class="input-lg" type="text" id ="dateSelecter" value="{{journeyResult.LeaveDateTime}}" />
+                            </div>
+                            <div class="col-lg-6">
+                                <h4><span class="glyphicon glyphicon-bold"></span> End Town:</h4>
+                                <input class="input-lg" type="text" id ="dateSelecter" value="{{journeyResult.ArrivalDateTime}}" />
+                            </div>
+                        </div>
+                        <br>
+                        </step>
+                        <step title="Select Journey Type">
+                        <div class="row">
+                            <div class="radio col-lg-12">
+                                <h4><label>
+                                    <input name="collapseGroup" type="radio" data-toggle="collapse" data-target="#collapseOne" checked="checked"/>
+                                    <b>Direct route</b> - only one step was involved in the journey.
+                                </label></h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="radio col-lg-12">
+                                <h4><label>
+                                    <input name="collapseGroup" type="radio" data-toggle="collapse" data-target="#collapseOne"/>
+                                <b>Indirect route</b> - multiple steps were involved in the journey.</label></h4>
+                            </div>
+                        </div>
+                        <br>
+                        </step>
+                        <step title="Journey Details" description="How did you travel?">
+                            <div class="row">
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Private Taxi</label></h4>
+                                </div>
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Community Taxi</label></h4>
+                                </div>
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-plane"></span> Airplane</label></h4>
+                                </div>
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Bus</label></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Shared Taxi</label></h4>
+                                </div>
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Train</label></h4>
+                                </div>
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-plane"></span> Boat</label></h4>
+                                </div>
+                                <div class="radio col-lg-3">
+                                    <h4><label><input type="radio" name="modeRadio" checked="checked"><span class="fa fa-taxi"></span> Walking</label></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-calendar"></span> Journey Start Date:</h4>
+                                    <input type="text" id ="dateSelecter" value="{{journeyResult.LeaveDateTime}}" />
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4><span class="glyphicon glyphicon-calendar"></span> Journey End Date:</h4>
+                                    <input type="text" id ="dateSelecter" value="{{journeyResult.ArrivalDateTime}}" />
+                                </div>
+                            </div>
+                            <br><br>
+                        </step>
+                        <step title="Journey Details" description="How did you travel?">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4><span class="fa fa-money"></span> Price Paid:</h4>
+                                    <input type="text"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4><span class="fa fa-money"></span> Currency Used:</h4>
+                                    <select class="form-control input-sm" id="selectCurrencyModal">
+                                        <option>USD</option>
+                                        <option>COP</option>
+                                        <option>GBP</option>
+                                        <option>EUR</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4><span class="glyphicon glyphicon-comment"></span> Journey Comments:</h4> <textarea class="form-control" rows="3" id="inputInstructions" placeholder="Write useful instructions here..." ng-model="journey.Instructions"></textarea>
+                                </div>
+                                <div class="col-lg-6"> 
+                                </div>
+                            </div>
+                            <br><br>
+                        </step>
+                    </form>
+                </stepset>
+            </div>
+            <div class="col-lg-2">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="partials/stepset.html">
+<div>
+  <form name="stepForm">
+    <div id="steps" ng-transclude>
+    </div>
+
+    <div id="navBar">
+      <span>
+        <button class="btn" ng-click="previous()" ng-disabled="!previousEnabled">{{previousText}}</button>
+        <button class="btn" ng-click="next()" ng-disabled="!nextEnabled">{{nextText}}</button>
+        <button class="btn btn-success" ng-click="submit()" ng-disabled="stepForm.$invalid || !submitEnabled">{{submitText}}</button>
+      </span>
+    </div>
+  </form>
+</div>
+</script>
+<script type="text/ng-template" id="partials/step.html">
+<div ng-show="isDisplayed">
+    <h1>{{title}}</h1>
+    <p>{{description}}</p>
+    <div ng-transclude></div>
+</div>
+</script>

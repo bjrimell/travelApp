@@ -10,9 +10,9 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-      <li><a href="#how_to-earn-money-while-you-travel">How it works</a></li> 
-        <li class=""><a href="#">Add Journey</a></li>
-        <li class=""><a href="#">Top Earners League</a></li>
+        <li><a ui-sref="about">How it works</a></li>
+        <li><a ui-sref="form.step-1">Add Journey</a></li>
+        <li><a ui-sref="form.step-1">Top Earners League</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -27,5 +27,4 @@
   </div>
 </nav>
 <header>
-    <script src="js/app.js"></script>
 </header>

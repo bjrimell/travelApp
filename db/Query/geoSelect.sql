@@ -37,3 +37,8 @@ WHERE js.Origin = 13454 AND js.Destination = 12688;
 SELECT * FROM leg
 INNER JOIN JourneySuggestionLeg jsl ON jsl.LegId = leg.Id
 WHERE jsl.JourneySuggestionId = 1
+
+
+ADD NEW JOURNEY
+
+http://localhost/Hackpacker/server/insertJourney.php?originCityId=13454&destinationCityId=13471&leaveDateTime=2016-12-12&arrivalDateTime=2016-12-12&mode=3&currencyUsed=COP&price=123000&instructions=this_is_an_instruction
