@@ -1,20 +1,36 @@
-<div class="row">
-    <div class="col-lg-6">
-        <div>
-          <div>Journey Start: {{chosenOriginPlace}}</div>
-          <!--Everything: {{chosenOriginPlaceDetails}}-->
+<div class="form-group row text-center">
+    <div class="col-lg-12">
+          <div><b>Where did your journey start?</b></div>
           {{formData.originCityId = chosenOriginPlaceDetails.place_id;""}}
+          {{formData.originCountry = chosenOriginPlaceDetails.country.toLowerCase();""}}
           {{formData.originCityName = chosenOriginPlace;""}}
-          <div><input ng-model="chosenOriginPlace" details="chosenOriginPlaceDetails" googleplace/></div>
-      </div>
+          <div><input class="form-control" ng-model="chosenOriginPlace" details="chosenOriginPlaceDetails" googleplace/></div>
     </div>
-    <div class="col-lg-6">
-        <div>
-          <div>Journey End: {{chosenDestinationPlace}}</div>
-          <!--Everything: {{chosenDestinationPlaceDetails}}-->
-          {{formData.destinationCityId = chosenDestinationPlaceDetails.place_id;""}}
-          {{formData.destinationCityName = chosenDestinationPlace;""}}
-          <div><input ng-model="chosenDestinationPlace" details="chosenDestinationPlaceDetails" googleplace/></div>
-      </div>
+</div>
+<div class="form-group row text-center" ng-if="formData.originCityName">
+    <div class="col-lg-12">
+        <div><i class="fa fa-check" style="color:green;" aria-hidden="true"></i> {{chosenOriginPlace}} <span class="flag-icon flag-icon-{{chosenOriginPlaceDetails.country.toLowerCase();}}"></span></div>
+    </div>
+</div>
+<br>
+<div class="form-group row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-4">
+        <a ui-sref="form.step-1" class="btn btn-block btn-warning">
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
+        </a>
+    </div>
+    <div class="col-lg-4" ng-if="!formData.originCityName">
+        <a ui-sref="form.step-destination" class="btn btn-block btn-success disabled">
+        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="col-lg-4" ng-if="formData.originCityName">
+        <a ui-sref="form.step-destination" class="btn btn-block btn-success">
+        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="col-lg-2">
     </div>
 </div>

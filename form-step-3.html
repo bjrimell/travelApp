@@ -6,27 +6,61 @@
             <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="taxi"><span class="fa fa-taxi"></span> Private Taxi</label></h4>
         </div>
         <div class="col-lg-3">
-            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="shared taxi"><span class="fa fa-taxi"></span> Community Taxi</label></h4>
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="shared taxi"><span class="fa fa-taxi"></span> Shared Taxi</label></h4>
         </div>
         <div class="col-lg-3">
-            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="Aeroplane"><span class="fa fa-plane"></span> Airplane</label></h4>
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="airplane"><span class="fa fa-plane"></span> Airplane</label></h4>
         </div>
         <div class="col-lg-3">
-            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="Bus"><span class="fa fa-taxi"></span> Bus</label></h4>
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="Bus"><span class="fa fa-bus"></span> Public Bus</label></h4>
         </div>
     </div>
     <div class="radio row">
         <div class="col-lg-3">
-            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="taxi"><span class="fa fa-taxi"></span> Private Taxi</label></h4>
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="bicycle"><span class="fa fa-bicycle"></span> Bicycle</label></h4>
         </div>
         <div class="col-lg-3">
-            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="taxi"><span class="fa fa-taxi"></span> Community Taxi</label></h4>
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="coach"><span class="fa fa-bus"></span> Coach</label></h4>
         </div>
         <div class="col-lg-3">
-            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="taxi"><span class="fa fa-plane"></span> Airplane</label></h4>
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="large boat"><span class="fa fa-ship"></span> Large Boat</label></h4>
         </div>
         <div class="col-lg-3">
-            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="taxi"><span class="fa fa-taxi"></span> Bus</label></h4>
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="metro"><span class="fa fa-subway"></span> Metro/Subway</label></h4>
+        </div>
+    </div>
+    <div class="radio row">
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="motorcycle"><span class="fa fa-motorcycle"></span> Motorcylce</label></h4>
+        </div>
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="motorized boat"><span class="fa fa-ship"></span> Motorized Boat</label></h4>
+        </div>
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="rickshaw"><span class="fa fa-truck"></span> Rickshaw</label></h4>
+        </div>
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="mototaxi"><span class="fa fa-motorcycle"></span> MotoTaxi</label></h4>
+        </div>
+    </div>
+    <div class="radio row">
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="walking"><span class="md md-directions-walk"></span> Walking</label></h4>
+        </div>
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="shuttle"><span class="fa fa-rocket"></span> Shuttle</label></h4>
+        </div>
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="train"><span class="fa fa-train"></span> Train</label></h4>
+        </div>
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="hitch"><span class="fa fa-hand-o-right"></span> Hitchhike</label></h4>
+        </div>
+    </div>
+    <div class="radio row">
+        <div class="col-lg-3">
+            <h4><label><input type="radio" name="modeRadio" ng-model="formData.ModeOfTransport" value="other"><span class="fa fa-rocket"></span> Other</label></h4>
+            <input ng-if="formData.ModeOfTransport == 'other'" type="text"/>
         </div>
     </div>
 </div>
@@ -35,7 +69,7 @@
     <div class="col-lg-2">
     </div>
     <div class="col-lg-4">
-        <a ui-sref="form.step-2" class="btn btn-block btn-warning">
+        <a ui-sref="form.step-destination" class="btn btn-block btn-warning">
         <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
         </a>
     </div>

@@ -41,4 +41,10 @@ WHERE jsl.JourneySuggestionId = 1
 
 ADD NEW JOURNEY
 
-http://localhost/Hackpacker/server/insertJourney.php?originCityId=13454&destinationCityId=13471&leaveDateTime=2016-12-12&arrivalDateTime=2016-12-12&mode=3&currencyUsed=COP&price=123000&instructions=this_is_an_instruction
+http://localhost/Hackpacker/server/insertJourney.php?authorId=anonymous&originCountry=GB&destinationCountry=CO&originCityId=13454&destinationCityId=13471&leaveDateTime=2016-12-12&arrivalDateTime=2016-12-12&mode=3&currencyUsed=COP&price=123000&instructions=this_is_an_instruction&originCityName=Woodway,%20Hutton&destinationCityName=this%20is%20also%20a%20place
+
+http://localhost/Hackpacker/#/travel-from-Corozal,%20Sucre,%20Colombia-to-Bogot%C3%A1%20-%20Bogota,%20Colombia
+http://localhost/Hackpacker/#/travel-from-Corozal,%20Sucre,%20Colombia-to-Cartagena%20-%20Bolivar,%20Colombia
+
+
+http://localhost/Hackpacker/server/selectIndividualJourney.php?originId=Corozal,%20Sucre,%20Colombia&destinationId=Cartagena%20-%20Bolivar,%20Colombia&journeyId=164

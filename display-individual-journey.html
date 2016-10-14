@@ -7,11 +7,11 @@
             <div class="col-lg-8">
                 <div ng-repeat="journeyResult in journeyResults">
                     <div class="panel panel-default">
-                        <div id="yo" class="panel-heading" ng-if="journeyResult.Direct=='0'">
+                        <div class="panel-heading" ng-if="journeyResult.Direct=='0'">
                             <h3>Travel from {{journeyResult.Origin}}, {{journeyResult.OriginState}} <span class="flag-icon flag-icon-{{journeyResult.OriginCountryCode}}"></span> to {{journeyResult.Destination}}, {{journeyResult.DestinationState}} <span class="flag-icon flag-icon-{{journeyResult.DestinationCountryCode}}"></span> - <span>(Multi-step Route)</span></h3>
                             Journey started: {{journeyResult.LeaveDateTime}}<br>Journey ended: {{journeyResult.ArrivalDateTime}}
                         </div>
-                        <div id="{{journeyResult.Id}}" class="panel-heading" ng-if="journeyResult.Direct=='1'">
+                        <div class="panel-heading" ng-if="journeyResult.Direct=='1'">
                             <h3><span class="{{journeyResult.ModeIcon}}"></span> {{journeyResult.ModeOfTransport}} from {{journeyResult.Origin}} <span class="flag-icon flag-icon-{{journeyResult.OriginCountryCode}}"></span> to {{journeyResult.Destination}} <span class="flag-icon flag-icon-{{journeyResult.DestinationCountryCode}}"></span> - <span>(Direct Route)</span></h3>
                             <b>Journey started:</b> {{journeyResult.LeaveDateTime}} <b>Journey ended:</b> {{journeyResult.ArrivalDateTime}}
                         </div>
@@ -70,10 +70,10 @@
                             <h4><b><span class="glyphicon glyphicon-stats"></span> Community Feedback</b></h4>
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upvoteModal">
+                                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#addJourney">
                                         <span class="glyphicon glyphicon-thumbs-up"> </span> Upvote
                                     </button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#downvoteModal">
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalHorizontal">
                                         <span class="glyphicon glyphicon-thumbs-down"> </span> Downvote
                                     </button>
                                 </div>
@@ -96,8 +96,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Start of Upvote Modal -->
-                    <div class="modal fade" id="upvoteModal" tabindex="-1" role="dialog" 
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog" 
                         aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -116,71 +116,49 @@
                                 <div class="modal-body">
                                     <!-- START OF FORM -->
                                     <form class="form-horizontal" role="form">
-                                        Content of modal here!
-                                    </form>
-                                    <!-- END OF FORM -->
-                                </div>
-                                <!-- Modal Footer -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Got it</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End of Upvote Modal -->
-                    <!-- Downvote Modal -->
-                    <div class="modal fade text-center" id="downvoteModal" tabindex="-1" role="dialog" 
-                        aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <button type="button" class="close" 
-                                    data-dismiss="modal">
-                                        <span aria-hidden="true">&times;</span>
-                                        <span class="sr-only">Close</span>
-                                    </button>
-                                    <h3 class="modal-title" id="myModalLabel">
-                                        Thanks for your feedback!
-                                    </h3>
-                                </div> 
-                                <!-- Modal Body -->
-                                <div class="modal-body">
-                                    <!-- START OF FORM -->
-                                    <form class="form-horizontal" role="form">
                                         <div class="row">
                                             <div class="radio col-lg-12">
-                                                <h4>Why did you downvote this journey?</h4>
+                                                <h4>Why did you downvote this {{journeyResult.ModeOfTransport}} journey from {{journeyResult.Origin}} to {{journeyResult.Destination}}?</h4>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="radio">
-                                                <h4><label>
-                                                    <input name="collapseGroup" type="radio" checked="checked" ng-model="addNewJourney" data-ng-value="true"/>
-                                                    This is not the best route to take
-                                                </label></h4>
-                                            </div>
-                                            <div class="radio">
-                                                <h4><label>
-                                                    <input name="collapseGroup" type="radio" ng-model="addNewJourney" data-ng-value="false"/>
-                                                Some details of this journey are innaccurate</label></h4>
-                                            </div>
+                                        <div class="divcontainer"> 
+                                            <i class="fa fa-toggle-on" style="font-size:24px;color:green" data-toggle="collapse" href="#collapsecontent"></i> I agree with price
                                         </div>
+                                        <div class="collapse" id="collapsecontent">
+Something here
+                                        </div>
+                                        <script>
+                                            $(document).ready(function () {
+    $('.fa').click(function () {
+        $(this).toggleClass("fa fa-toggle-on").toggleClass("fa fa-toggle-off");
+    });
+});
+</script>
+                                        
+<label>
+<input name="collapseGroup" type="radio" data-toggle="collapse" data-target="#collapseOne" checked="checked"/>
+<b>Price</b> - only one step was involved in the journey.
+</label>
+<label>
+<input name="collapseGroup" type="radio" data-toggle="collapse" data-target="#collapseOne" checked="checked"/>
+<b>Journey Duration</b> - only one step was involved in the journey.
+</label>
+<label>
+<input name="collapseGroup" type="radio" data-toggle="collapse" data-target="#collapseOne" checked="checked"/>
+<b>Innaccurate</b> - only one step was involved in the journey.
+</label>
                                     </form>
                                     <!-- END OF FORM -->
                                 </div>
                                 <!-- Modal Footer -->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <a ng-if="addNewJourney" data-dismiss="modal" class="btn btn-success">
-                                        Save</a>
-                                    <a ng-if="!addNewJourney" data-dismiss="modal" class="btn btn-success">
-                                        Save 2</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- End of Downvote Modal -->
+                    <!-- End of Modal -->
                 </div>
                 <div ng-show="!journeyResults.length">
                     <h3>No results found.</h3>

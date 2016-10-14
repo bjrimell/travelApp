@@ -1,0 +1,38 @@
+<div class="form-group row text-center">
+    <div class="col-lg-12">
+        <div>
+          <div><b>Where did your journey end?</b></div>
+          {{formData.destinationCityId = chosenDestinationPlaceDetails.place_id;""}}
+          {{formData.destinationCountry = chosenDestinationPlaceDetails.country.toLowerCase();""}}
+          {{formData.destinationCityName = chosenDestinationPlace;""}}
+          <div><input class="form-control" ng-model="chosenDestinationPlace" details="chosenDestinationPlaceDetails" googleplace/></div>
+      </div>
+    </div>
+</div>
+<div class="form-group row text-center" ng-if="formData.destinationCityName">
+    <div class="col-lg-12">
+        <div><i class="fa fa-check" style="color:green;" aria-hidden="true"></i> {{chosenDestinationPlace}} <span class="flag-icon flag-icon-{{formData.originCountry}}"></span></div>
+    </div>
+</div>
+<br>
+<div class="form-group row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-4">
+        <a ui-sref="form.step-2" class="btn btn-block btn-warning">
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
+        </a>
+    </div>
+    <div class="col-lg-4" ng-if="!formData.destinationCityName">
+        <a ui-sref="form.step-3" class="btn btn-block btn-success disabled">
+        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="col-lg-4" ng-if="formData.destinationCityName">
+        <a ui-sref="form.step-3" class="btn btn-block btn-success">
+        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>

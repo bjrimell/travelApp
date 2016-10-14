@@ -3,6 +3,7 @@ require_once 'connectToDb.php'; //connect to DB
 
 $originId= $_GET['originId'];
 $destinationId= $_GET['destinationId'];
+$journeyId= $_GET['journeyId'];
 
 $result = $conn->query("SELECT
 author.username AS 'Author',
@@ -24,7 +25,8 @@ js.Direct
 FROM JourneySuggestion js
 LEFT JOIN Mode m ON js.Mode = m.Id
 INNER JOIN user AS author ON author.username = js.authorId
-WHERE originName = '$originId' AND destinationName = '$destinationId';");
+WHERE js.Id = '$journeyId';");
+//WHERE originName = '$originId' AND destinationName = '$destinationId';");
 $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $parentId = $rs['Id'];

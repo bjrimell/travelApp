@@ -1,5 +1,6 @@
 //var app = angular.module("myApp", ["ngRoute", "ui.router"]);
-var app = angular.module("myApp", ['ngAnimate', 'ngSanitize', "ui.router", "angular.step", 'mgcrea.ngStrap']);
+//var app = angular.module("myApp", ['ngAnimate', 'ngSanitize', "ui.router", "angular.step", 'mgcrea.ngStrap']);
+var app = angular.module("myApp", ['ngAnimate', 'ngSanitize', "ui.router", "angular.step"]);
 
 app.directive('googleplace', function() {
     return {
@@ -16,20 +17,36 @@ app.directive('googleplace', function() {
             scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
 
             google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+// NEW
+                var countryCode = '';
+                var geoComponents = scope.gPlace.getPlace();
+                var addressComponents = geoComponents.address_components;
+                addressComponents = addressComponents.filter(function(component){
+                    switch (component.types[0]) {
+                        case "locality": // city
+                            return true;
+                        case "administrative_area_level_1": // state
+                            return true;
+                        case "country": // country
+                        countryCode = component.short_name;
+                            return true;
+                        default:
+                            return false;
+                    }
+                }).map(function(obj) {
+                    return obj.long_name;
+                });
+                
+// END NEW
                 scope.$apply(function() {
                     scope.details = scope.gPlace.getPlace();
+                    scope.details.country = countryCode;
                     model.$setViewValue(element.val());                
                 });
             });
         }
     };
 });
-
-/*
-app.controller('MyCtrl', function($scope, $http) {
-    $scope.gPlace;
-})
-*/
 
 app.config(function($stateProvider, $urlRouterProvider) {
     
@@ -44,6 +61,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
         url: '/travel-from-:originId-to-:destinationId',
         templateUrl : "journey.htm",
         controller : 'journeyController'     
+    })
+
+    .state('individualJourneyResults', {
+        url: '/travel-from-:originId-to-:destinationId/journey=:journeyId',
+        templateUrl : "journey.htm",
+        controller : 'individualJourneyController'     
     })
 
     .state('addJourney', {
@@ -70,6 +93,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             template: 'I could sure use a drink right now.'
         })
 
+    /*
     // nested list with custom controller
     .state('home.list', {
         url: '/list',
@@ -78,13 +102,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
             $scope.dogs = ['Bernese', 'Husky', 'Goldendoodle'];
         }
     })
+    */
 
+/*
     // nested list with just some random string data
     .state('home.paragraph', {
         url: '/paragraph',
         template: 'I could sure use a drink right now.'
     })
-
+*/
     // form        // route to show our basic form (/form)
         .state('form', {
             url: '/form',
@@ -92,12 +118,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: 'formController'
         })
 
+
         // url will be /form/indirect
         .state('form.indirect', {
             url: '/indirect',
             templateUrl: 'form-indirect.html'
         })
-        
+    
         // url will be /form/step-1
         .state('form.step-1', {
             url: '/step-1',
@@ -108,6 +135,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('form.step-2', {
             url: '/step-2',
             templateUrl: 'form-step-2.html'
+        })
+
+        // url will be /form/interests
+        .state('form.step-destination', {
+            url: '/step-enter-destination',
+            templateUrl: 'form-step-destination.html'
         })
 
         // url will be /form/step-3
@@ -132,7 +165,19 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('form.step-6', {
             url: '/confirm',
             templateUrl: 'form-step-6.html'
-        });
+        })
+
+        // url will be /form/step-6
+        .state('form.success', {
+            url: '/success/:journeyId/:originId/:destinationId',
+            templateUrl: 'journey-added-success.html'
+        })
+
+        // url will be /form/step-6
+        .state('form.myJourney', {
+            url: '/myJourney/:journeyId',
+            templateUrl: 'display-individual-journey.html'
+        })
 
         // catch all route
         // send users to the home page 
@@ -147,6 +192,7 @@ app.controller('VoteController', function($scope) {
   };
 });
 
+/*
 app.controller('referenceDataController', function($scope, $http) {
 
 		$http.get("server/getCities.php?id=$scope.seatId")
@@ -154,9 +200,11 @@ app.controller('referenceDataController', function($scope, $http) {
 
 }
 );
+*/
 
  app.controller('journeyController', function($scope, $http, $stateParams) {
 
+        $scope.addNewJourney = true;
         $scope.originCity = $stateParams.originId;
         $scope.destinationCity = $stateParams.destinationId;
 		$http.get("server/selectJourneys.php?originId="+$scope.originCity+"+&destinationId="+$scope.destinationCity)
@@ -166,6 +214,25 @@ app.controller('referenceDataController', function($scope, $http) {
             });
 	});
 
+     app.controller('individualJourneyController', function($scope, $http, $stateParams) {
+
+        $scope.originCity = $stateParams.originId;
+        $scope.destinationCity = $stateParams.destinationId;
+        $scope.journeyId = $stateParams.journeyId;
+		$http.get("server/selectIndividualJourney.php?originId="+$scope.originCity+"+&destinationId="+$scope.destinationCity+"&journeyId="+$scope.journeyId)
+		    .then(function (response)
+            {
+                $scope.journeyResults = response.data.records;
+            });
+	});
+
+ app.controller('journeyAddedController', function($scope, $http, $stateParams) {
+
+        $scope.journeyId = $stateParams.journeyId;
+        $scope.originId = $stateParams.originId;
+        $scope.destinationId = $stateParams.destinationId;
+	});
+/*
      app.controller('addJourneyController', function($scope, $http, $stateParams) {
 
         $scope.originCity = $stateParams.originId;
@@ -182,20 +249,10 @@ app.controller('referenceDataController', function($scope, $http) {
         alert("You clicked submit.");
     };
 });
-
-app.controller('formController', function($scope, $templateCache, $http) {
-
-/*
-$scope.selectedAddress = '';
-  $scope.getAddress = function(viewValue) {
-    var params = {address: viewValue, sensor: false};
-    return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {params: params})
-    .then(function(res) {
-      return res.data.results;
-    });
-      };
-
 */
+
+app.controller('formController', function($scope, $templateCache, $http, $state) {
+//app.controller('formController', ['$state', '$stateParams', function($scope, $templateCache, $http, $stateProvider, $stateParams){
 
     // we will store all of our form data in this object
     $scope.formData = {
@@ -218,9 +275,8 @@ $scope.selectedAddress = '';
         "NoBorder" : true,
         "Direct" : true,
         "ModeOfTransport" : "shared taxi",
-        "CurrencyUsed" : "USD"};
-
-    $scope.formData.Dunno = $scope.gPlace;
+        "CurrencyUsed" : "USD",};
+    
     
     // function to process the form
     $scope.processForm = function() {
@@ -229,109 +285,196 @@ $scope.selectedAddress = '';
         // 1. Determine if we need to pass today, yesterday, or a manually entered date.
         switch ($scope.formData.leaveDate) {
             case "today":
-                var today = new Date();
-                $scope.formData.leaveDate = today;
+                $today = new Date();
+                $scope.formData.leaveYear = $today.getFullYear();
+                $scope.formData.leaveMonth = $today.getMonth()+1;
+                $scope.formData.leaveDay = $today.getDate();
                 break;
             case "yesterday":
                 $today = new Date();
                 $yesterday = new Date($today);
                 $yesterday.setDate($today.getDate() - 1);
-                $scope.formData.leaveDate = $yesterday;
+                $scope.formData.leaveYear = $yesterday.getFullYear();
+                $scope.formData.leaveMonth = $yesterday.getMonth()+1;
+                $scope.formData.leaveDay = $yesterday.getDate();
                 break;
             case "other":
                     switch ($scope.formData.leaveMonth) {
                         case "January":
-                            leaveMonth = "01";
+                            $scope.formData.leaveMonth = "01";
                             break;
                         case "February":
-                            leaveMonth = "02";
+                            $scope.formData.leaveMonth = "02";
                             break;
                         case "March":
-                            leaveMonth = "03";
+                            $scope.formData.leaveMonth = "03";
                             break;
                         case "April":
-                            leaveMonth = "04";
+                            $scope.formData.leaveMonth = "04";
                             break;
                         case "May":
-                            leaveMonth = "05";
+                            $scope.formData.leaveMonth = "05";
                             break;
                         case "June":
-                            leaveMonth = "06";
+                            $scope.formData.leaveMonth = "06";
+                            break;
                         case "July":
-                            leaveMonth = "07";
+                            $scope.formData.leaveMonth = "07";
+                            break;
                         case "August":
-                            leaveMonth = "08";
+                            $scope.formData.leaveMonth = "08";
+                            break;
                         case "September":
-                            leaveMonth = "09";
+                            $scope.formData.leaveMonth = "09";
+                            break;
                         case "October":
-                            leaveMonth = "10";
+                            $scope.formData.leaveMonth = "10";
+                            break;
                         case "November":
-                            leaveMonth = "11";
+                            $scope.formData.leaveMonth = "11";
+                            break;
                         case "December":
-                            leaveMonth = "12";};
-                $scope.formData.leaveDate = $scope.formData.leaveYear + "-" + leaveMonth + "-" + $scope.formData.leaveDay;
+                            $scope.formData.leaveMonth = "12";
+                        break;};
             break;
         }
+
+        $scope.formData.leaveDate = $scope.formData.leaveYear + "-" + $scope.formData.leaveMonth + "-" + $scope.formData.leaveDay;
+        $scope.formData.leaveDate += " " + $scope.formData.leaveHour + ":" + $scope.formData.leaveMinute;
 
         switch ($scope.formData.arrivalDate) {
             case "today":
                 $today = new Date();
-                $scope.formData.arrivalDate = $today;
+                $scope.formData.arriveYear = $today.getFullYear();
+                $scope.formData.arriveMonth = $today.getMonth()+1;
+                $scope.formData.arriveDay = $today.getDate();
                 break;
             case "yesterday":
                 $today = new Date();
                 $yesterday = new Date($today);
                 $yesterday.setDate($today.getDate() - 1);
-                $scope.formData.arrivalDate = $yesterday;
+                $scope.formData.arriveYear = $yesterday.getFullYear();
+                $scope.formData.arriveMonth = $yesterday.getMonth()+1;
+                $scope.formData.arriveDay = $yesterday.getDate();
                 break;
             case "other":
-                    switch ($scope.formData.arrivalDate) {
+                    switch ($scope.formData.arriveMonth) {
                         case "January":
-                            arriveMonth = "01";
+                            $scope.formData.arriveMonth = "01";
                             break;
                         case "February":
-                            arriveMonth = "02";
+                            $scope.formData.arriveMonth = "02";
                             break;
                         case "March":
-                            arriveMonth = "03";
+                            $scope.formData.arriveMonth = "03";
                             break;
                         case "April":
-                            arriveMonth = "04";
+                            $scope.formData.arriveMonth = "04";
                             break;
                         case "May":
-                            arriveMonth = "05";
+                            $scope.formData.arriveMonth = "05";
                             break;
                         case "June":
-                            arriveMonth = "06";
+                            $scope.formData.arriveMonth = "06";
+                            break;
                         case "July":
-                            arriveMonth = "07";
+                            $scope.formData.arriveMonth = "07";
+                            break;
                         case "August":
-                            arriveMonth = "08";
+                            $scope.formData.arriveMonth = "08";
+                            break;
                         case "September":
-                            arriveMonth = "09";
+                            $scope.formData.arriveMonth = "09";
+                            break;
                         case "October":
-                            arriveMonth = "10";
+                            $scope.formData.arriveMonth = "10";
+                            break;
                         case "November":
-                            arriveMonth = "11";
+                            $scope.formData.arriveMonth = "11";
+                            break;
                         case "December":
-                            arriveMonth = "12";};
-                $scope.formData.arrivalDate = $scope.formData.arriveYear + "-" + arriveMonth + "-" + $scope.formData.arriveDay;
+                            $scope.formData.arriveMonth = "12";
+                        break;};
             break;
         }
 
-        //TODO
-        // 1. Set destination country equal to origin country if NoBorder = true
-        // 2. Set arrival year equal to leave year if checkbox ticked
+        $scope.formData.arrivalDate = $scope.formData.arriveYear + "-" + $scope.formData.arriveMonth + "-" + $scope.formData.arriveDay;
+        $scope.formData.arrivalDate += " " + $scope.formData.arriveHour + ":" + $scope.formData.arriveMinute;
 
-        var test2 = $scope.formData.arrivalDate.toISOString();
+        switch ($scope.formData.ModeOfTransport) {
+            case "Taxi":
+                $scope.formData.ModeOfTransport = 1;
+                break;
+            case "Shared Taxi":
+                $scope.formData.ModeOfTransport = 2;
+                break;
+            case "Airplane":
+                $scope.formData.ModeOfTransport = 3;
+                break;
+            case "Walking":
+                $scope.formData.ModeOfTransport = 4;
+                break;
+            case "Bus":
+                $scope.formData.ModeOfTransport = 5;
+                break;
+            case "Coach":
+                $scope.formData.ModeOfTransport = 6;
+                break;
+            case "Rickshaw":
+                $scope.formData.ModeOfTransport = 7;
+                break;
+            case "Bicycle":
+                $scope.formData.ModeOfTransport = 8;
+                break;
+            case "Motorcycle":
+                $scope.formData.ModeOfTransport = 9;
+                break;
+            case "Large Boat":
+                $scope.formData.ModeOfTransport = 10;
+                break;
+            case "Motorized Boat":
+                $scope.formData.ModeOfTransport = 11;
+                break;
+            case "Metro/Subway":
+                $scope.formData.ModeOfTransport = 12;
+                break;
+            case "Other":
+                $scope.formData.ModeOfTransport = 13;
+                break;
+            case "Shuttle":
+                $scope.formData.ModeOfTransport = 14;
+                break;
+            case "MotoTaxi":
+                $scope.formData.ModeOfTransport = 15;
+                break;
+            case "Hitch":
+                $scope.formData.ModeOfTransport = 16;
+                break;
+            default:
+                $scope.formData.ModeOfTransport = 4;
+                break;
+        }
 
-        $http.post("server/insertJourney.php?originCityId="+$scope.formData.originCityId+
+
+        $http.post("server/insertJourney.php?authorId=anonymous&originCityId="+$scope.formData.originCityId+
+        "&originCityName="+$scope.formData.originCityName+
+        "&originCountry="+$scope.formData.originCountry+
         "&destinationCityId="+$scope.formData.destinationCityId+
-        "&leaveDateTime="+$scope.formData.leaveDate.toISOString()+"&arrivalDateTime="+$scope.formData.arrivalDate.toISOString()+"&mode=3&currencyUsed="+$scope.formData.CurrencyUsed+
+        "&destinationCityName="+$scope.formData.destinationCityName+
+        "&destinationCountry="+$scope.formData.destinationCountry+
+        "&leaveDateTime="+$scope.formData.arrivalDate+
+        "&arrivalDateTime="+$scope.formData.leaveDate+
+        "&mode="+ $scope.formData.ModeOfTransport +
+        "&currencyUsed="+$scope.formData.CurrencyUsed+
         "&price="+$scope.formData.Price+
         "&instructions="+$scope.formData.Instructions).success
-		(function(data){
-		  		});
+        (function (response)
+            {
+                $scope.formData.resultId = response;
+                //window.location = "./journeyAdded.php?id="+$scope.formData.resultId;
+
+                $state.go('form.success', {originId: $scope.formData.originCityName, destinationId: $scope.formData.destinationCityName, journeyId: $scope.formData.resultId});
+            });
     };
 
 });
@@ -490,6 +633,7 @@ angular.module('angular.step', [])
     };
 }]);
 
+/*
 'use strict';
 
 angular.module('mgcrea.ngStrapDocs')
@@ -517,3 +661,4 @@ angular.module('mgcrea.ngStrapDocs')
   };
 
 });
+*/
