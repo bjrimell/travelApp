@@ -1,0 +1,149 @@
+<div class="container-fluid" ng-controller="accountController">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2>Your journey requests.</h2>
+      </div>
+    </div>
+    <div ng-if="points < 5" class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                <h2><strong>Insufficent <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points!</strong></h2>
+                <h4>You do not have enough <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points to request a journey. Requests cost just 5 <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points, which you can earn by <a ui-sref="form.step-1">adding just one journey</a> that you know about. You can earn even more points by adding a user requested journey.</h4>  
+            </div>
+        </div>
+    </div>
+    <div ng-if="points > 4" class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-success">
+                <h2><strong>You can make journey requests!</strong></h2>
+                <h4>You can request a new journey from our community if you have 5 <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points or more.</h4>
+            </div>
+            <h4>To request a journey, simply search for the journey you would like to see. If there are no results, you can raise a request using the link on the reults page.</h4>
+            <h5>You can earn <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points by <a ui-sref="form.step-1">adding journeys</a> that you know about. You can earn even more points by adding a user requested journey.</h5>  
+        </div>
+    </div>
+    <div ng-if="points > 4" class="well well-lg">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>I want to know how to get from:</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-5">
+                <input class="location-box form-control" ng-model="chosenOriginPlace" details="chosenOriginPlaceDetails" placeholder="Enter origin" googleplace/>
+            </div>
+            <div class="col-lg-5">
+                <input class="location-box form-control"  ng-model="chosenDestinationPlace" details="chosenDestinationPlaceDetails" placeholder="Enter destination" googleplace/>
+            </div>
+            <div class="col-lg-2" ng-controller="accountController">
+                <a ui-sref="journeyResults({ originId: chosenOriginPlace, destinationId: chosenDestinationPlace })" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span> Search Journeys</a>     
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-4" ng-controller="accountController">
+            <div class="well well-lg">
+                <h3><span class="glyphicon glyphicon-time"></span> Your Unanswered requests</h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Journey</th>
+                        <th>Reward</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="requestedJourney in requestedJourneys | filter:{Status:'Unanswered'}">
+                            <td><a ui-sref="requestedJourney({ originId: requestedJourney.Origin, destinationId: requestedJourney.Destination})">{{requestedJourney.Origin}} to {{requestedJourney.Destination}}</a></td>
+                            <td><span class="badge">{{requestedJourney.Count*5}} <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points</span></td>
+                            <td>
+                                <a ng-if="points <5" disabled class="btn btn-primary btn-sm">Boost!</a>
+                                <a ng-if="points >4" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#journeyRequestedModal" ng-controller="requestJourneyController" ng-click="requestJourney(requestedJourney.Origin, requestedJourney.Destination, true, points)">Boost!</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="well well-lg">
+                <h3><span class="glyphicon glyphicon-question-sign"></span> Your Answered requests</h3>
+                    <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Journey</th>
+                        <th>Reward</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="requestedJourney in requestedJourneys | filter:{Status:'Pending'}">
+                            <td><a ui-sref="journeyResults({ originId: requestedJourney.Origin, destinationId: requestedJourney.Destination})">{{requestedJourney.Origin}} to {{requestedJourney.Destination}}</a></td>
+                            <td><span class="badge">{{requestedJourney.Count*5}} <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points</span></td>
+                            <td><a class="btn btn-primary btn-sm" ui-sref="journeyResults({ originId: requestedJourney.Origin, destinationId: requestedJourney.Destination})">Review</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="well well-lg">
+                <h3><span class="glyphicon glyphicon-ok-sign"></span> Your Completed requests</h3>
+                    <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Journey</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="requestedJourney in requestedJourneys | filter:{Status:'Complete'}">
+                            <td><a ui-sref="journeyResults({ originId: requestedJourney.Origin, destinationId: requestedJourney.Destination})">{{requestedJourney.Origin}} to {{requestedJourney.Destination}}</a></td>
+                            <td><a class="btn btn-primary btn-sm" ui-sref="landing-page.itineraries">Add to itinerary</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- start of journey request modal -->
+                <div class="modal fade text-center" id="journeyRequestedModal" tabindex="-1" role="dialog" 
+                    aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <button type="button" class="close" 
+                                data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only">Close</span>
+                                </button>
+                                <h3 class="modal-title" id="myModalLabel">
+                                    Journey Request Boosted!
+                                </h3>
+                            </div> 
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+                                <!-- START OF FORM -->
+                                <form class="form-horizontal" role="form">
+                                    <div class="row" ng-controller="accountController">
+                                        <div class="radio col-lg-12">
+                                            <h4>Your request has been boosted, meaning the member who answers it to your satisfaction will now receive 5 extra <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points.</h4>
+                                            <h5>You will be alerted by email at <b>{{emailaddress}}</b> once someone has added this journey.</h5>
+                                            <h5>You have used 5 <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points, but you can earn more right now by adding journeys that you know about.</h5>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- END OF FORM -->
+                            </div>
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal" ng-controller="hackController" ng-click="reloadPage()">Got it!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- End of journey requested modal -->

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="row" ng-controller="accountController">
+        <div class="col-lg-12 text-center">
+            <h1><span class="glyphicon glyphicon-road"></span> Welcome to CrowdRoutes.</h1>
+            <h4>Hello, {{username}}. You have {{points}} <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points.</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+              <ul class="nav nav-pills">
+                <li ui-sref-active="active"><a ui-sref="landing-page.home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li ui-sref-active="active"><a ui-sref="landing-page.requests"><span class="glyphicon glyphicon-tasks"></span> Your Requests</a></li>
+                <li ui-sref-active="active"><a ui-sref="landing-page.itineraries"><span class="glyphicon glyphicon-list-alt"></span> Your Itineraries</a></li>
+                <li ui-sref-active="active"><a ui-sref="landing-page.stats"><span class="glyphicon glyphicon-signal"></span> Your Stats</a></li>
+                <li ui-sref-active="active"><a ui-sref="landing-page.settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            </ul>
+            <div id="member-views" ui-view></div>
+        </div>
+    </div>
+    <br>
+</div>

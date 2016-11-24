@@ -1,3 +1,10 @@
+body { padding-top:0px; }
+
+/* navbar */
+.navbar-blue {
+    background-color: blue important!;
+    border-color: #E7E7E7;
+}
 /* Remove the navbar's default margin-bottom and rounded borders */
 .navbar {
     margin-bottom: 0;
@@ -14,13 +21,43 @@ footer {
     width: 100%; /* Set width to 100% */
     margin: auto;
     min-height:200px;
+    max-height:500px;
 }
 
-/* Hide the carousel text when the screen is less than 600 pixels wide */
-@media (max-width: 600px) {
 .carousel-caption {
-    display: none;
+    position: absolute;
+    top: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 100%;
 }
+
+.carousel-caption-lower {
+    position: absolute;
+    top: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 100%;
+}
+
+.full-width {
+    width: 100%;
 }
 
 .up{
@@ -37,6 +74,14 @@ input[type="number"] {
 
 #selectCurrencyModal{
  width:50px;   
+}
+
+.selectCurrency{
+ width:250px;   
+}
+
+.pricePaid{
+ width:25px;   
 }
 
 #selectCountryModal{
@@ -65,4 +110,67 @@ input[type="number"] {
 
 #selectDay{
  width:50px;   
+}
+
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.white {
+    padding-top: 50px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+    padding-left: 30px;
+    background-color: white;
+}
+
+.grey {
+    padding-top: 50px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+    padding-left: 30px;
+    background-color: #f2f2f2;
+}
+
+.glyph-main {
+    font-size: 100px;
+}
+
+.glyph-green {
+    color: green;
+}
+
+.glyph-orange {
+    color: darkorange;
+}
+
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
+
+.location-box {
+    height: 50px;
+}
+
+.place-select {
+    height: 50px;
+}
+
+.padded {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+/* BUTTON STYLES */
+
+.btn-green {
+    background-color: limegreen;
+    color: white;
+}
+
+.btn-green:hover {
+        background-color: #1EB91E;
+    color: white;
 }

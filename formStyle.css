@@ -1,23 +1,31 @@
 /* BASIC STYLINGS
 ============================================================================= */
-body                            { padding-top:20px; }
-pre                             { margin-bottom:20px; }
+
+
 
 /* form styling */
+
 #form-container                { background:white; margin-bottom:20px;
     border-radius:5px; }
 #form-container .page-header   { background:white; margin:0; padding:30px; 
     border-top-left-radius:5px; border-top-right-radius:5px; }
 
 /* numbered buttons */
+
+/*
 #status-buttons                 {  }
 #status-buttons a               { color:black; display:inline-block; font-size:12px; margin-right:10px; text-align:center; text-transform:uppercase; }
 #status-buttons a:hover         { text-decoration:none; }
 #status-buttons span            { background:#080808; display:block; height:30px; margin:0 auto 10px; padding-top:5px; width:30px; 
     border-radius:50%; }
 
+*/
+
 /* active buttons */
+/*
 #status-buttons a.active span   { background:#00BC8C; }
+*/
+
 
 /* ANIMATION STYLINGS
 ============================================================================= */
@@ -69,14 +77,17 @@ pre                             { margin-bottom:20px; }
 @-webkit-keyframes slideInRight {
 	from 	{ -webkit-transform:translateX(200%); }
 	to 		{ -webkit-transform: translateX(0); }
-}
+/*
 
 /* Smart Search styles on City lookup */
 
+/*
 h1 {
 	font-size: 20px;
 	color: #111;
 }
+
+
 
 .content {
 	width: 80%;
@@ -108,3 +119,4 @@ h1 {
 	color: #111;
 	background-color: #F1F1F1;
 }
+*/

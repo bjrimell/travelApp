@@ -1,0 +1,79 @@
+<div class="container-fluid" ng-controller="homeController">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2>Find the best route now.</h2>
+        <h5>Search thousands of crowd-sourced journeys to find your best route, voted for by real travellers like you.</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-5">
+        <input class="location-box form-control" ng-model="chosenOriginPlace" details="chosenOriginPlaceDetails" placeholder="Enter origin" googleplace/>
+      </div>
+      <div class="col-lg-5">
+          <input class="location-box form-control"  ng-model="chosenDestinationPlace" details="chosenDestinationPlaceDetails" placeholder="Enter destination" googleplace/>
+      </div>
+      <div class="col-lg-2">
+        <a ui-sref="journeyResults({ originId: chosenOriginPlace, destinationId: chosenDestinationPlace })" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span> Search Journeys</a>
+      </div>
+  </div>
+  <br>  
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="alert alert-info">
+          <h2><strong>Help our community and earn <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points!</strong></h2>
+          <h4>You earn points for every journey you add. You can earn even more points if you help complete a requested journey.</h4>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <br>
+      <div class="well well-lg">
+        <h4>You are currently in {{currentLocation}}. Where did you arrive there from?</h4>
+        <div class="row">
+          <div class="col-lg-6">
+            <input class="location-box form-control" ng-model="arrivedHereFromPlace" details="chosenOriginPlaceDetails" placeholder="Enter origin" googleplace/>
+          </div>
+          <div class="col-lg-3">
+            <a ng-if="arrivedHereFromPlace" ui-sref="form.step-1-origin-known-destination-known({origin: chosenOriginPlace, destination: currentLocation})" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span> Submit</a>
+            <a ng-if="!arrivedHereFromPlace" disabled class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span> Submit</a>
+          </div>
+          <div class="col-lg-3">
+            <h5>+5 <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points.</h5>
+          </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-6">
+      <br>
+      <div class="well well-lg">
+      <h4>You were recently in {{currentLocation}}. Where did you arrive there from?</h4>
+      <div class="row">
+        <div class="col-lg-6">
+          <input class="location-box form-control" ng-model="arrivedFromPlace" details="chosenOriginPlaceDetails" placeholder="Enter origin" googleplace/>
+        </div>
+        <div class="col-lg-3">
+          <a ng-if="arrivedFromPlace" ui-sref="form.step-1-origin-known-destination-known({origin: chosenOriginPlace, destination: currentLocation})" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span> Submit</a>
+          <a ng-if="!arrivedFromPlace" disabled class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span> Submit</a>
+        </div>
+          <div class="col-lg-3">
+            <h5>+5 <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points.</h5>
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-6">
+      <h4>Can you help with any of the following journeys?</h4>
+      <ol>
+        <div ng-repeat="requestedJourney in topRequestedJourneys">
+          <h4><a ui-sref="requestedJourney({ originId: requestedJourney.Origin, destinationId: requestedJourney.Destination})"><li>{{requestedJourney.Origin}} to {{requestedJourney.Destination}} <span class="badge">{{requestedJourney.Count*5}} <span class="glyphicon glyphicon-fire glyph-small glyph-orange"></span> points</span></li></a></h4>
+        </div>
+      </ol>
+    </div>
+    <div class="col-lg-6">
+    </div>
+  </div>
+</div>

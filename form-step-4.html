@@ -1,251 +1,86 @@
-<!-- form-profile.html -->
-
-<div class="form-group">
-    <div class="row">
-        <div class="col-lg-6">
-            <h4><span class="glyphicon glyphicon-calendar"></span> Journey Started:</h4>
-            <div class="radio">
-                <label class="radio-inline"><input type="radio" name="leaveDate" ng-model="formData.leaveDate" value="today">Today</label>
-                <label class="radio-inline"><input type="radio" name="leaveDate" ng-model="formData.leaveDate" value="yesterday">Yesterday</label>
-                <label class="radio-inline"><input type="radio" name="leaveDate" ng-model="formData.leaveDate" value="other">Another Date</label>
-            </div>
-            <div class="row" ng-if="formData.leaveDate == 'other'">
-                <div class="col-lg-2">
-                    Day
-                    <select class="form-control input-lg" id="selectDay" ng-model="formData.leaveDay">
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
-                        <option>25</option>
-                        <option>26</option>
-                        <option>27</option>
-                        <option>28</option>
-                        <option>29</option>
-                        <option>30</option>
-                        <option>31</option>
-                    </select>
-                </div>
-                <div class="col-lg-6">
-                    Month
-                    <select class="form-control input-lg" id="selectMonth" ng-model="formData.leaveMonth">
-                        <option>January</option>
-                        <option>February</option>
-                        <option>March</option>
-                        <option>April</option>
-                        <option>May</option>
-                        <option>June</option>
-                        <option>July</option>
-                        <option>August</option>
-                        <option>September</option>
-                        <option>October</option>
-                        <option>November</option>
-                        <option>December</option>
-                    </select>
-                </div>
-                <div class="col-lg-4">
-                    Year
-                    <select class="form-control input-lg" id="selectYear" ng-model="formData.leaveYear">
-                        <option>2015</option>
-                        <option>2016</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <h4><span class="fa-clock-o"></span> Journey Start Time:</h4>
-            <div class="row">
-                <div class="col-lg-6">
-                    HH
-                    <select class="form-control input-lg" id="selectHour" ng-model="formData.leaveHour">
-                        <option>00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                    </select>
-                </div>
-                <div class="col-lg-6">
-                    MM
-                    <select class="form-control input-lg" id="selectMinute" ng-model="formData.leaveMinute">
-                        <option>00</option>
-                        <option>15</option>
-                        <option>30</option>
-                        <option>45</option>
-                    </select>
-                </div>
-            </div>
+{{formData.progress=70;""}}
+<div class="form-group text-center">
+    <div class="form-group">
+        <label for="sel1">When did you start your journey?</label>
+        <div class="radio">
+            <h4><label class="radio-inline"><input type="radio" name="leaveDate" ng-model="formData.leaveDate" value="today">Today</label></h4>
+            <h4><label class="radio-inline"><input type="radio" name="leaveDate" ng-model="formData.leaveDate" value="yesterday">Yesterday</label></h4>
+            <h4><label class="radio-inline"><input type="radio" name="leaveDate" ng-model="formData.leaveDate" value="other">Another Date</label></h4>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <h4><span class="glyphicon glyphicon-calendar"></span> Journey Ended:</h4>
-            <div class="radio">
-                <label class="radio-inline"><input type="radio" name="arrivalDate" ng-model="formData.arrivalDate" value="today">Today</label>
-                <label class="radio-inline"><input type="radio" name="arrivalDate" ng-model="formData.arrivalDate" value="yesterday">Yesterday</label>
-                <label class="radio-inline"><input type="radio" name="arrivalDate" ng-model="formData.arrivalDate" value="other">Another Date</label>
-            </div>
-            <div class="row" ng-if="formData.arrivalDate == 'other'">
-                <div class="col-lg-4">
-                    Day
-                    <select class="form-control input-lg" id="selectDay" ng-model="formData.arriveDay">
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
-                        <option>25</option>
-                        <option>26</option>
-                        <option>27</option>
-                        <option>28</option>
-                        <option>29</option>
-                        <option>30</option>
-                        <option>31</option>
-                    </select>
-                </div>
-                <div class="col-lg-4">
-                    Month
-                    <select class="form-control input-lg" id="selectMonth" ng-model="formData.arriveMonth">
-                        <option>January</option>
-                        <option>February</option>
-                        <option>March</option>
-                        <option>April</option>
-                        <option>May</option>
-                        <option>June</option>
-                        <option>July</option>
-                        <option>August</option>
-                        <option>September</option>
-                        <option>October</option>
-                        <option>November</option>
-                        <option>December</option>
-                    </select>
-                </div>
-                <div class="col-lg-4">
-                    Year
-                    <select class="form-control input-lg" id="selectYear" ng-model="formData.arriveYear">
-                        <option>2015</option>
-                        <option>2016</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <h4><span class="fa-clock-o"></span> Journey End Time:</h4>
-            <div class="row">
-                <div class="col-lg-6">
-                    HH:
-                    <select class="form-control input-lg" id="selectHour" ng-model="formData.arriveHour">
-                        <option>00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                    </select>
-                </div>
-                <div class="col-lg-6">
-                    MM:
-                    <select class="form-control input-lg" id="selectMinute" ng-model="formData.arriveMinute">
-                        <option>00</option>
-                        <option>15</option>
-                        <option>30</option>
-                        <option>45</option>
-                    </select>
-                </div>
+    <div class="row" ng-if="formData.leaveDate == 'other'">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="input-group">
+                <label for="selectDay">Day:</label>
+                <select class="form-control input-lg" id="selectDay" ng-model="formData.leaveDay">
+                    <option>01</option>
+                    <option>02</option>
+                    <option>03</option>
+                    <option>04</option>
+                    <option>05</option>
+                    <option>06</option>
+                    <option>06</option>
+                    <option>07</option>
+                    <option>08</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                </select>
+                <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                <label for="selectMonth">Month:</label>
+                <select class="form-control input-lg" id="selectMonth" ng-model="formData.leaveMonth">
+                    <option>January</option>
+                    <option>February</option>
+                    <option>March</option>
+                    <option>April</option>
+                    <option>May</option>
+                    <option>June</option>
+                    <option>July</option>
+                    <option>August</option>
+                    <option>September</option>
+                    <option>October</option>
+                    <option>November</option>
+                    <option>December</option>
+                </select>
+                <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                <label for="selectYear">Year:</label>
+                <select class="form-control input-lg" id="selectYear" ng-model="formData.leaveYear">
+                    <option>2015</option>
+                    <option>2016</option>
+                </select>
             </div>
         </div>
     </div>
 </div>
 
-<div class="form-group row">
-    <div class="col-lg-2">
-    </div>
-    <div class="col-lg-4">
-        <a ui-sref="form.step-3" class="btn btn-block btn-warning">
-        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
+<ul class="pager">
+    <li>
+        <a ui-sref="form.step-3">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
         </a>
-    </div>
-    <div class="col-lg-4">
-        <a ui-sref="form.step-5" class="btn btn-block btn-success">
+    </li>
+    <li>
+        <a ui-sref="form.journeyFromTime">
         Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
         </a>
-    </div>
-    <div class="col-lg-2">
-    </div>
-</div>
+    </li>
+</ul>

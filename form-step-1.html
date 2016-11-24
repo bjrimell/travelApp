@@ -1,3 +1,4 @@
+{{formData.progress=14;""}}
 <div class="form-group text-center">
     <div class="radio">
         <h4><label>
@@ -12,7 +13,60 @@
     </div>
 </div>
 
-<div class="form-group row">
+
+<ul ng-if="formData.originCityName && formData.destinationCityName" class="pager">
+    <h4>{{formData.originCityName}} to {{formData.destinationCityName}}.</h4>
+    <li>
+        <a ng-if="!formData.Direct" ui-sref="form.indirect">
+            <span class="glyphicon glyphicon-circle-arrow-right"></span> Next
+        </a>
+        <a ng-if="formData.Direct" ui-sref="form.step-3">
+            <span class="glyphicon glyphicon-circle-arrow-right"></span> Next
+        </a>
+    </li>
+</ul>
+
+<ul ng-if="formData.originCityName && formData.destinationCityName" class="pager">
+    <h4>{{formData.originCityName}} to {{formData.destinationCityName}}.</h4>
+    <li ng-if="formData.Direct">
+        <a ui-sref="form.step-3">
+        Next <span class="glyphicon glyphicon-circle-arrow-right">Next</span>
+        </a>
+    </li>
+</ul>
+
+<div ng-if="!formData.originCityName">
+    <ul class="pager">
+        <li>
+            <a ng-if="formData.Direct" ui-sref="form.step-2">
+                Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </a>
+            <a ng-if="!formData.Direct" ui-sref="form.indirect">
+                Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!--
+<div ng-if="formData.originCityName && formData.destinationCityName" class="form-group row text-center">
+    <h4>{{formData.originCityName}} to {{formData.destinationCityName}}.</h4>
+    <div class="col-lg-4">
+    </div>
+    <div ng-if="formData.Direct" class="col-lg-4">
+        <a ui-sref="form.step-3" class="btn btn-block btn-success">
+        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div ng-if="!formData.Direct" class="col-lg-4">
+        <a ui-sref="form.indirect" class="btn btn-block btn-success">
+        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
+<div ng-if="!formData.originCityName" class="form-group row">
     <div class="col-lg-4">
     </div>
     <div ng-if="formData.Direct" class="col-lg-4">
@@ -28,3 +82,4 @@
     <div class="col-lg-4">
     </div>
 </div>
+-->

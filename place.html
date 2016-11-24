@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>{{placeName}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>People have travelled from {{placeName}} to:</h4>
+        </div>
+        <div ng-repeat="placeDestination in placeDestinations">
+            <ul>
+                <li><a ui-sref="place({ placeName: placeDestination.destinationName})">{{placeDestination.destinationName}}</a><br><a ui-sref="journeyResults({ originId: placeName, destinationId: placeDestination.destinationName })" class="btn btn-primary">View Journeys</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>People have arrived at {{placeName}} from:</h4>
+        </div>
+        <div ng-repeat="placeOrigin in placeOrigins">
+            <ul>
+                <li><a ui-sref="place({ placeName: placeOrigin.OriginName})">{{placeOrigin.OriginName}}</a><br><a ui-sref="journeyResults({ originId: placeOrigin.OriginName, destinationId: placeName })" class="btn btn-primary">View Journeys</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Top recommended in {{placeName}}:</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-repeat="recommendation in recommendations">
+            <div class="col-lg-6">
+                <h2><i class="{{recommendation.CategoryIcon}}" aria-hidden="true"></i> {{recommendation.Category}}</h2><br><a ui-sref="place({ placeName: recommendation.RecommendationPlaceName})">{{recommendation.RecommendationPlaceName}}</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+[Wed Oct 19 09:12:34.315113 2016] [mpm_prefork:notice] [pid 1569] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 09:12:34.315261 2016] [core:notice] [pid 1569] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 09:28:09.500453 2016] [mpm_prefork:notice] [pid 1569] AH00169: caught SIGTERM, shutting down
+[Wed Oct 19 09:29:09.751650 2016] [mpm_prefork:notice] [pid 1596] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 09:29:09.761308 2016] [core:notice] [pid 1596] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 09:32:38.535623 2016] [mpm_prefork:notice] [pid 1596] AH00169: caught SIGTERM, shutting down
+[Wed Oct 19 09:33:37.343557 2016] [mpm_prefork:notice] [pid 1618] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 09:33:37.344604 2016] [core:notice] [pid 1618] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 10:04:34.100953 2016] [:error] [pid 1743] [client 81.158.80.61:49664] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:06:59.864836 2016] [:error] [pid 1683] [client 81.158.80.61:49721] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:07:59.876125 2016] [:error] [pid 1684] [client 81.158.80.61:49805] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:22:05.358479 2016] [mpm_prefork:notice] [pid 1618] AH00171: Graceful restart requested, doing restart
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+[Wed Oct 19 10:22:05.569152 2016] [mpm_prefork:notice] [pid 1618] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 10:22:05.569200 2016] [core:notice] [pid 1618] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 10:22:16.635600 2016] [mpm_prefork:notice] [pid 1618] AH00169: caught SIGTERM, shutting down
+[Wed Oct 19 10:22:17.713783 2016] [mpm_prefork:notice] [pid 21047] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 10:22:17.713895 2016] [core:notice] [pid 21047] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 10:24:18.363440 2016] [:error] [pid 21051] [client 81.158.80.61:50112] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:24:18.452889 2016] [:error] [pid 21051] [client 81.158.80.61:50112] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:32:15.178096 2016] [:error] [pid 23173] [client 81.158.80.61:60953] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:32.939001 2016] [:error] [pid 23175] [client 81.158.80.61:60966] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:38.153950 2016] [:error] [pid 23173] [client 81.158.80.61:60967] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:38.892956 2016] [:error] [pid 23173] [client 81.158.80.61:60967] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:39.823160 2016] [:error] [pid 23173] [client 81.158.80.61:60967] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:40.601728 2016] [:error] [pid 23173] [client 81.158.80.61:60967] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:41.152761 2016] [:error] [pid 23173] [client 81.158.80.61:60967] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:41.732985 2016] [:error] [pid 23173] [client 81.158.80.61:60967] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:33:50.649473 2016] [:error] [pid 21054] [client 81.158.80.61:60968] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/html/server/connectToDb.php on line 5, referer: http://104.236.20.101/
+[Wed Oct 19 10:46:24.848755 2016] [mpm_prefork:notice] [pid 21047] AH00169: caught SIGTERM, shutting down
+[Wed Oct 19 10:46:26.150773 2016] [mpm_prefork:notice] [pid 23823] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 10:46:26.150920 2016] [core:notice] [pid 23823] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 10:58:28.667881 2016] [mpm_prefork:notice] [pid 23823] AH00169: caught SIGTERM, shutting down
+[Wed Oct 19 10:58:29.528952 2016] [mpm_prefork:notice] [pid 24012] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 10:58:29.529040 2016] [core:notice] [pid 24012] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 10:58:41.815600 2016] [authn_file:error] [pid 24016] (2)No such file or directory: [client 81.158.80.61:50910] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 10:58:52.942109 2016] [authn_file:error] [pid 24017] (2)No such file or directory: [client 81.158.80.61:50920] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 10:58:55.424372 2016] [authn_file:error] [pid 24016] (2)No such file or directory: [client 81.158.80.61:50921] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 10:58:57.108934 2016] [authn_file:error] [pid 24018] (2)No such file or directory: [client 81.158.80.61:50918] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 10:59:20.134680 2016] [authn_file:error] [pid 24016] (2)No such file or directory: [client 81.158.80.61:50943] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 10:59:46.027001 2016] [authn_file:error] [pid 24015] (2)No such file or directory: [client 81.158.80.61:50972] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 11:00:10.169060 2016] [mpm_prefork:notice] [pid 24012] AH00169: caught SIGTERM, shutting down
+[Wed Oct 19 11:00:11.321029 2016] [mpm_prefork:notice] [pid 24073] AH00163: Apache/2.4.18 (Ubuntu) configured -- resuming normal operations
+[Wed Oct 19 11:00:11.321178 2016] [core:notice] [pid 24073] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Oct 19 11:00:16.632502 2016] [authn_file:error] [pid 24077] (2)No such file or directory: [client 81.158.80.61:51028] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 11:00:31.248044 2016] [authn_file:error] [pid 24088] (2)No such file or directory: [client 81.158.80.61:51038] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd
+[Wed Oct 19 11:02:11.302676 2016] [authn_file:error] [pid 24087] (2)No such file or directory: [client 81.158.80.61:51053] AH01620: Could not open password file: /etc/apache2/.phpmyadmin.htpasswd

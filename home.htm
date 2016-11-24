@@ -1,33 +1,54 @@
+
+<!--<script>
+    gaTrack("/", "Home");
+</script>-->
+<a title="test" href="./about.htm">test link</a>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <img src="./images/sunset.jpg" alt="Image">
+        <img src="./images/city.jpeg" alt="Image">
         <div class="carousel-caption">
-          <h3>Earn Money by Helping Travellers</h3>
-          <p>Cooperative Travel Tips</p>
+          <div class="full-width text-center">
+            <div class="row">
+              <div class="col-lg-12">
+                <h1>The best route is not always the most obvious.</h1>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="item">
-        <img src="https://placehold.it/1200x400?text=Earn Money While You Travel" alt="Image">
+        <img src="./images/backpacker.jpg" alt="Image">
         <div class="carousel-caption">
-          <h3>Crowd-sourced travel advice.</h3>
-          <p>The more helpful your advice, the more you earn!</p>
+            <div class="full-width text-center">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h1>The best route is not always the most efficient.</h1>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
 
       <div class="item">
-        <img src="https://placehold.it/1200x400?text=Upvote Good Routes" alt="Image">
+        <img src="./images/windy_road.jpeg" alt="Image">
         <div class="carousel-caption">
-          <h3>Crowd-sourced travel advice.</h3>
-          <p>The more helpful your advice, the more you earn!</p>
+            <div class="full-width text-left">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h1>The best route is not always the most simple.</h1>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -42,42 +63,160 @@
       <span class="sr-only">Next</span>
     </a>
 </div>
-
-<div class="container text-center">
+<div class="white container-full text-left">
   <div class="row">
-    <div class="col-sm-4">
-        <label for="ex1">Travelling From</label>
-        <input class="form-control" id="ex1" type="text" ng-model="originCity">
-    </div>
-      <div class="col-sm-4">
-        <label for="ex1">Travelling To</label>
-        <input class="form-control" id="ex1" type="text" ng-model="destinationCity">
-    </div>
-    <div class="col-sm-4">
-      <a ui-sref="journeyResults({ originId: originCity, destinationId: destinationCity })" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</a>
+    <div class="col-lg-12">
+      <h2>Find the best route now.</h2>
+      <h5>Search thousands of crowd-sourced journeys to find your best route, voted for by real travellers like you.</h5>
     </div>
   </div>
-  <br>
+  <div class="row">
+    <form>
+      <div class="col-lg-5">
+        <input class="location-box form-control" ng-model="chosenOriginPlace" details="chosenOriginPlaceDetails" placeholder="Enter origin" googleplace/>
+      </div>
+      <div class="col-lg-5">
+          <input class="location-box form-control"  ng-model="chosenDestinationPlace" details="chosenDestinationPlaceDetails" placeholder="Enter destination" googleplace/>
+      </div>
+      <div class="col-lg-2">
+        <a ui-sref="journeyResults({ originId: chosenOriginPlace, destinationId: chosenDestinationPlace })" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span> Search Journeys</a>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="grey container-full">
+  <div class="row">
+    <div class="col-lg-4">
+      <h2>Finally, an easy way to find the best travel tips.</h2>
+      <h5>Search thousands of crowd-sourced journeys to find your best route, voted for by real travellers like you.</h5>
+    </div>
+  </div>
+<div class="row">
+    <div class="col-lg-4 text-center">
+      <h1><span class="glyphicon glyphicon-ok glyph-main glyph-green"></span></h1>
+      <h4>Find real journeys verified by fellow travellers.</h4>
+    </div>
+    <div class="col-lg-4 text-center">
+      <h1><span class="glyphicon glyphicon-fire glyph-main glyph-orange"></span></h1>
+      <h4>Find the hottest journeys all over the world.</h4>
+    </div>
+    <div class="col-lg-4 text-center">
+      <h1><span class="glyphicon glyphicon-sunglasses glyph-main"></span></h1>
+      <h4>Relax knowing your trip is in the hands of our community experts.</h4>
+    </div>
+  </div>
+</div>
+<div class="white container-full text-center">
+  <div class="white row">
+    <div class="col-lg-8">
+      <h2>Tell us about your journey.</h2>
+      <h5>Join our community of thousands and add your journey.</h5>
+      <a ui-sref="form.step-1" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Add Journey</a>
+    </div>
+    <div class="col-lg-4">
+      <br>
+      <img src="./images/add_journey.jpeg" class="img-rounded img-responsive" style="width:100% height:200px" alt="Image">
+    </div>
+  </div>
+</div>
+<div class="grey container-full text-center">
   <div class="row">
     <div class="col-sm-4">
-      <img src="https://placehold.it/150x80?text=Add a Route" class="img-responsive" style="width:100%" alt="Image">
-      <p>Current Project</p>
+      <a ui-sref="place({ placeName: 'Corozal, Sucre, Colombia'})"><img src="./images/corozal.jpg" class="img-rounded img-responsive" style="width:100% height:200px" alt="Image"></a>
+      <p>Destination of the month: <a ui-sref="place({ placeName: 'Corozal, Sucre, Colombia'})">Corozal, Sucre, Colombia</a>.</p>
     </div>
     <div class="col-sm-4">
-      <img src="https://placehold.it/150x80?text=Browse by Country" class="img-responsive" style="width:100%" alt="Image">
-      <p>Project 2</p>
+      <img src="./images/london.jpg" class="img-rounded img-responsive" style="width:100% height:200px" alt="Image">
+      <p>How to get to <a ui-sref="place({ placeName: 'Big Ben, London, United Kingdom'})">Big Ben, London</a></p>
     </div>
     <div class="col-sm-4">
-      <div class="well">
-                <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-plus"></span> Add Route
-        </button>
+      <a ui-sref="place({ placeName: 'Corozal, Sucre, Colombia'})"><img src="./images/tulum.jpg" class="img-rounded img-responsive" style="width:100% height:200px" alt="Image"></a>
+      <p>Popular trips: <a ui-sref="journeyResults({ originId: 'Cancún, Mexico', destinationId: 'Tulum, Mexico'})">Cancun to Tulum</a>.</p>
+    </div>
+  </div>
+</div>
+<div class="white container-full text-center">
+  <div class="white row">
+    <div class="col-lg-4">
+      <img src="./images/planning.jpeg" class="img-rounded img-responsive" style="width:100% height:200px" alt="Image">
+    </div>
+    <div class="col-lg-8">
+      <h2>Plan your itinerary.</h2>
+      <h5>Plan your trip now using community-proven journeys.</h5>
+      <a ui-sref="form.step-1" class="btn btn-primary"><span class="glyphicon glyphicon-list-alt"></span> Plan Itinerary</a>
+    </div>
+  </div>
+</div>
+<div class="grey container-full text-center">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Help our community.</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+          <div class="panel-heading"><h3>Most requested journeys.</h3></div>
+          <div class="panel-body">
+            <ol>
+              <div ng-repeat="requestedJourney in topRequestedJourneys">
+                <h4><a ui-sref="requestedJourney({ originId: requestedJourney.Origin, destinationId: requestedJourney.Destination})"><li>{{requestedJourney.Origin}} to {{requestedJourney.Destination}} <span class="badge">{{requestedJourney.Count}}</span></li></a></h4>
+              </div>
+            </ol>
+          </div>
+          <div class="panel-footer"><a data-toggle="modal" data-target="#journeyRequestedModal" ng-controller="requestJourneyController" ng-click="requestJourney(anonymous, originCity, destinationCity)" class="btn btn-primary">Request a journey</a></div>
       </div>
-      <div class="well">
-                <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-share-alt"></span> Share
-        </button>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+          <div class="panel-heading"><h3>Newest journey requests.</h3></div>
+          <div class="panel-body">
+            <ol>
+              <div ng-repeat="requestedJourney in recentJourneyRequests">
+                <h4><a ui-sref="requestedJourney({ originId: requestedJourney.Origin, destinationId: requestedJourney.Destination})"><li>{{requestedJourney.Origin}} to {{requestedJourney.Destination}} <span class="badge">{{requestedJourney.Count}}</span></li></a></h4>
+              </div>
+            </ol> 
+          </div>
+          <div class="panel-footer"><a data-toggle="modal" data-target="#journeyRequestedModal" ng-controller="requestJourneyController" ng-click="requestJourney(anonymous, originCity, destinationCity)" class="btn btn-primary">Request Now</a></div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+          <div class="panel-heading"><h3>Newest journeys.</h3></div>
+          <div class="panel-body">
+            <ol>
+              <h4><a><li>Stamford Bridge to Upton Park <a data-toggle="tooltip" data-placement="top" title="Earn 12 points for adding this journey!"><span class="badge">12</span></a></li></a></h4>
+              <h4><a><li>Stamford Bridge to Upton Park <span class="badge">5</span></li></a></h4>
+              <h4><a><li>Stamford Bridge to Upton Park <span class="badge">4</span></li></a></h4>
+              <h4><a><li>Stamford Bridge to Upton Park <span class="badge">2</span></li></a></h4>
+              <h4><a><li>Stamford Bridge to Upton Park <span class="badge">1</span></li></a></h4>
+            </ol>
+          </div>
+          <div class="panel-footer"><a data-toggle="modal" data-target="#journeyRequestedModal" ng-controller="requestJourneyController" ng-click="requestJourney(anonymous, originCity, destinationCity)" class="btn btn-primary">Request Now</a></div>
       </div>
     </div>
   </div>
 </div>
+<div class="white container-full text-center">
+  <div class="row" ng-controller="locateController">
+    <br>Scope here: <input type="text" ng-value="currentLocation"></input>
+    <form>
+      <div class="col-lg-5">
+          <h4>You are in <reverse-geocode ng-if="latitude && longitude" lat="{{latitude}}" lng="{{longitude}}"></reverse-geocode>
+          Where did you arrive there from?</h4>
+      </div>
+      <div class="col-lg-5">
+        <input class="location-box form-control" ng-model="chosenOriginPlace" details="chosenOriginPlaceDetails" placeholder="Enter origin" googleplace value="testing"/>
+      </div>
+      <div class="col-lg-2">
+        <a ng-if="chosenOriginPlace" ui-sref="form.step-1-origin-known-destination-known({origin: chosenOriginPlace, destination: currentLocation})" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span> Submit</a>
+        <a ng-if="!chosenOriginPlace" disabled ui-sref="form.step-1-origin-known-destination-known({origin: chosenOriginPlace, destination: currentLocation})" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span> Submit</a>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
