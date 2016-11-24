@@ -1,6 +1,50 @@
-//var app = angular.module("myApp", ["ngRoute", "ui.router"]);
-//var app = angular.module("myApp", ['ngAnimate', 'ngSanitize', "ui.router", "angular.step", 'mgcrea.ngStrap']);
-var app = angular.module("myApp", ['ngAnimate', 'ngSanitize', "ui.router", "angular.step"]);
+var app = angular.module("myApp", ['ngAnimate', 'ngSanitize', "ui.router", "angular.step", "angulartics", "angulartics.google.analytics"]);
+
+function MyCtrl($scope, $location, $window) {
+  $scope.$on('$viewContentLoaded', function(event) {
+    $window.ga('send', 'pageview', { page: $location.url() });
+  });
+}
+
+    app.directive('reverseGeocode', function () {
+        return {
+            restrict: 'E',
+            template: '<div></div>',
+            link: function (scope, element, attrs) {
+                var geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(attrs.lat, attrs.lng);
+                geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[1]) {
+                            element.text(results[1].formatted_address);
+                        } else {
+                            element.text('Location not found');
+                        }
+                    } else {
+                        element.text('Geocoder failed due to: ' + status);
+                    }
+                });
+            },
+            replace: true
+        }
+    });
+
+app.factory('UserService', function() {
+  return {
+      username : getCookie('username')
+  };
+});
+
+app.config(function ($provide) {
+    // override default behavious to ensure scroll to top of the page on state change
+  $provide.decorator('$uiViewScroll', function ($delegate) {
+    return function (uiViewElement) {
+       //var top = uiViewElement.getBoundingClientRect().top;
+       var top = uiViewElement[0].getBoundingClientRect().top;
+       window.scrollTo(0, (top - 30));
+    }; 
+  });
+});
 
 app.directive('googleplace', function() {
     return {
@@ -17,7 +61,6 @@ app.directive('googleplace', function() {
             scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
 
             google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
-// NEW
                 var countryCode = '';
                 var geoComponents = scope.gPlace.getPlace();
                 var addressComponents = geoComponents.address_components;
@@ -37,7 +80,6 @@ app.directive('googleplace', function() {
                     return obj.long_name;
                 });
                 
-// END NEW
                 scope.$apply(function() {
                     scope.details = scope.gPlace.getPlace();
                     scope.details.country = countryCode;
@@ -54,19 +96,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
     .state('home', {
         url: '/home',
-        templateUrl: 'home.htm'
+        templateUrl: 'home.htm',
+        controller: 'homeController'
     })
 
     .state('journeyResults', {
         url: '/travel-from-:originId-to-:destinationId',
-        templateUrl : "journey.htm",
+        templateUrl : "journey.php",
         controller : 'journeyController'     
     })
 
     .state('individualJourneyResults', {
         url: '/travel-from-:originId-to-:destinationId/journey=:journeyId',
-        templateUrl : "journey.htm",
+        templateUrl : "journey.php",
         controller : 'individualJourneyController'     
+    })
+
+    .state('requestedJourney', {
+        url: '/travel-from-:originId-to-:destinationId/requested',
+        templateUrl : "requestedJourneyForm.html",
+        controller: 'addRequestedJourneyController'  
     })
 
     .state('addJourney', {
@@ -78,6 +127,36 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('about', {
         url: '/how_to-earn-money-while-you-travel',
         templateUrl : "about.htm"   
+    })
+
+    .state('login', {
+        url: '/login',
+        templateUrl: "login.html",
+        controller: "loginController"
+    })
+
+    .state('landing-page', {
+        url: '/members',
+        templateUrl: "landing-page.html",
+        controller: "loginController"
+    })
+
+    .state('logout', {
+        url: '/logout',
+        templateUrl: "logout.php",
+        controller: "logoutController"
+    })
+
+    .state('signup', {
+        url: '/signup',
+        templateUrl: "signup.html",
+        controller: 'signupController'
+    })
+
+    .state('signup-success', {
+        url: '/welcome',
+        templateUrl: "signup-success.html",
+        controller: 'signupController'
     })
 
         .state('journeyResults.list', {
@@ -93,31 +172,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
             template: 'I could sure use a drink right now.'
         })
 
-    /*
-    // nested list with custom controller
-    .state('home.list', {
-        url: '/list',
-        templateUrl: 'partial-home-list.htm',
-        controller: function($scope) {
-            $scope.dogs = ['Bernese', 'Husky', 'Goldendoodle'];
-        }
-    })
-    */
-
-/*
-    // nested list with just some random string data
-    .state('home.paragraph', {
-        url: '/paragraph',
-        template: 'I could sure use a drink right now.'
-    })
-*/
-    // form        // route to show our basic form (/form)
         .state('form', {
             url: '/form',
             templateUrl: 'form.html',
             controller: 'formController'
         })
-
 
         // url will be /form/indirect
         .state('form.indirect', {
@@ -130,11 +189,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/step-1',
             templateUrl: 'form-step-1.html'
         })
-        
+
+        // url will be /form/step-1
+        .state('form.step-1-origin-known-destination-known', {
+            url: ':origin/:destination/step-1',
+            templateUrl: 'form-step-1.html',
+            controller: 'prePopulatedFormController'
+        })
+
         // url will be /form/interests
         .state('form.step-2', {
             url: '/step-2',
             templateUrl: 'form-step-2.html'
+        })
+
+        // url will be /form/step-1
+        .state('form.step-2-origin-known-destination-known', {
+            url: '/:origin/:destination/step-2',
+            templateUrl: 'form-step-2.html',
+            controller: 'formController'
         })
 
         // url will be /form/interests
@@ -153,6 +226,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('form.step-4', {
             url: '/step-4',
             templateUrl: 'form-step-4.html'
+        })
+
+        .state('form.journeyFromTime', {
+            url: '/journeyFromTime',
+            templateUrl: 'form-step-from-time.html'
+        })
+
+        .state('form.journeyArrivalTime', {
+            url: '/journeyArrivalTime',
+            templateUrl: 'form-step-arrival-time.html'
+        })
+
+        .state('form.journeyArrivalDate', {
+            url: '/journeyArrivalDate',
+            templateUrl: 'form-step-arrival-date.html'
         })
 
         // url will be /form/step-5
@@ -179,28 +267,347 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'display-individual-journey.html'
         })
 
+        .state('logging-in', {
+            url: '/members/logging-in',
+            templateUrl: 'logging-in.html',
+            controller: 'loggingInController'
+        })
+
+        .state('landing-page.home', {
+            url: '/home',
+            templateUrl: 'landing-home.html'
+        })
+
+        // url will be /form/step-1
+        .state('landing-page.requests', {
+            url: '/requests',
+            templateUrl: 'landing-requests.html'
+        })
+
+        // url will be /form/step-1
+        .state('landing-page.stats', {
+            url: '/stats',
+            templateUrl: 'landing-stats.html'
+        })
+
+                // url will be /form/step-1
+        .state('landing-page.settings', {
+            url: '/settings',
+            templateUrl: 'landing-settings.html'
+        })
+
+        .state('landing-page.itineraries', {
+            url: '/itineraries',
+            templateUrl: 'landing-itineraries.html'
+        })
+
+        // url will be /form/step-6
+        .state('place', {
+            url: '/place/:placeName',
+            templateUrl: 'place.html',
+            controller : 'placeController'  
+        })
+
         // catch all route
         // send users to the home page 
         $urlRouterProvider.otherwise('/home');
 
 });
 
-app.controller('VoteController', function($scope) {
-  $scope.changeVote = function(vote, flag){
-    $scope.vote = vote==flag?'None':flag;
-    alert($scope.vote);
+app.controller('VoteController', function($scope, $http, $state, UserService) {
+  $scope.changeVote = function(journeyId, value, origin, destination){
+
+    if (!$scope.journeyResult.hasVoted)
+    {
+        $http.post("server/vote.php?journeyId="+journeyId+
+            "&vote="+value).success
+            (function (response)
+                {
+                    $scope.journeyResult.hasVoted=true;
+                    switch (value) {
+                        case 1:
+                            // UPVOTE
+                            $scope.journeyResult.Upvote++;
+                            $scope.journeyResult.Score++;
+                            // amend status to Completed if this was a requested journey
+                            $http.post("server/updateRequestedJourneyStatus.php?origin="+origin+"&destination="+destination+"&status=Complete&userId="+UserService.username)
+                            .success(function (response)
+                                {
+                                    // if we have set a requested journey to Complete, the author deserves the points!
+                                    if (parseInt(response) >0)
+                                    {
+                                        var pointsToAward = 5 * response;
+                                        $http.post("server/awardPointsToUserByJourneyId.php?journeyId="+journeyId+"&pointsToAward="+pointsToAward)
+                                        .success(function(response)
+                                        {
+                                            var pointsAwarded = true;
+                                        })
+                                        .error(function(errorResponse)
+                                        {
+                                            var errorHappened = true;
+                                        })
+                                    }
+                                })
+                            .error(function (errorResponse)
+                                {
+                                    var requestUpdated = false;
+                                })
+                            break;
+                        case -1:
+                            // DOWNVOTE
+                            $scope.journeyResult.Downvote++;
+                            $scope.journeyResult.Score--;
+                            break;
+                    }
+                      $scope.downVoteAction = function(journeyId, addNewJourney){
+                        switch (addNewJourney) {
+                            case true:
+                                break;
+                            case false:
+                                break;
+                        }
+                    };
+                })
+            .error(function(errorResponse){
+            });
+    }
   };
 });
 
+app.controller('hackController', function($scope){
+
+        $scope.reloadPage = function() {
+        location.reload();
+        // THIS IS A TEMPORARY MEASURE UNTIL I CAN FIGURE OUT HOW TO DEAL WITH THE PARENT SCOPE HAVING BEEN DESTROTED
+        // I basically needed to have the state update so that user points are refreshed upon Boosting a request.
+        // I think the parent scope (i.e. of the parent state) has been destroyed, meaning I cannot update it here.
+        // Same issue as the parent state meaning the toolbar doesn't get updated on login.
+    }
+
+});
+
+
+app.controller('locateController', function($scope){
+    $scope.currentLocation = "set at TOP of locate controller!";
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position){
+      $scope.$apply(function(){
+        $scope.latitude = position.coords.latitude;
+        $scope.longitude = position.coords.longitude;
+        $scope.latlng = $scope.latitude +", "+$scope.longitude;
+        $scope.currentLocation = "set in IF STATEMENT of locate controller!";
+        populateLocation();
+      });
+    });
+    //$scope.currentLocation = $scope.currentLocation;
+  }
+
+function populateLocation ($scope, element, attrs) {
+    $scope.currentLocation = "set at top of POPULATELOCATION method of locate controller!";
+    var tempProperty = "this is temp property";
+    $scope.currentLocation = tempProperty;
+                var geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(attrs.lat, attrs.lng);
+                geocoder.geocode({ 'latLng': latlng }, function (results, status, $scope) {
+                    tempProperty = "set within GEOCODE of POPULATELOCATION method of locate controller!";
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[1]) {
+                            element.text(results[1].formatted_address);
+                            $scope.currentLocation = results[1].formatted_address;
+                        } else {
+                            element.text('Location not found');
+                        }
+                    } else {
+                        element.text('Geocoder failed due to: ' + status);
+                    }
+                });
+            }
+            
+            //$scope.currentLocation = "set at BOTTOm of POPULATELOCATION method of locate controller!";
+            
+});
+
+
 /*
-app.controller('referenceDataController', function($scope, $http) {
 
-		$http.get("server/getCities.php?id=$scope.seatId")
-		    .then(function (response) {$scope.seatToEdit = response.data.records;});
+app.controller('locateController', function($scope){
 
-}
-);
+    var ubicacion = "Blu tac";
+
+    getLocation();
+    
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+            ubicacion = "set!";
+        } else {
+            ubicacion = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        var geocoder = new google.maps.Geocoder;
+        var latlng = {lat: parseFloat(lat), lng: parseFloat(long)};
+        geocoder.geocode({'location': latlng}, function(results, status) {
+            if (status === 'OK') {
+                if (results[1]) {
+                    ubicacion = results[1].formatted_address;
+        } else {
+            $scope.currentLocation  = 'No results found';
+        }
+        } else {
+        $scope.currentLocation  = 'Geocoder failed due to: ' + status;
+        }
+        });
+    }
+
+$scope.currentLocation = ubicacion;
+});
 */
+
+ app.controller('homeController', function($scope, $http, $stateParams, $state, UserService) {
+
+    $scope.username = UserService.username;
+
+//$scope.currentLocation = locationString;
+
+    $http.post("server/selectTopRequestedJourneys.php").success
+        (function (response)
+            {
+                $scope.topRequestedJourneys = response.records;
+
+                // TODO: check for success
+            });
+
+    $http.post("server/selectRecentJourneyRequests.php").success
+    (function (response)
+        {
+            $scope.recentJourneyRequests = response.records;
+
+            // TODO: check for success
+        });
+	});
+
+ app.controller('requestJourneyController', function($scope, $http, $stateParams, $state, UserService) {
+
+        $scope.requestJourney = function(origin, destination, boost) {
+
+        $http.post("server/insertJourneyRequest.php?username="+UserService.username+"&origin="+origin+
+        "&destination="+destination).success
+        (function (response)
+            {
+                $scope.id = response;
+                $scope.requestedJourney.Count ++;
+
+                // TODO: check for success
+            });
+
+        $http.post("server/addUserPoints.php?username="+UserService.username+"&points=-5")
+        .success(function (response)
+        {
+            
+        })
+        }
+	});
+
+     app.controller('addRequestedJourneyController', function($scope, $http, $stateParams) {
+
+        $scope.originCity = $stateParams.originId;
+        $scope.destinationCity = $stateParams.destinationId;
+	});
+
+    app.controller('accountController', function($scope, $http, $stateParams, UserService) {
+
+        $http.post("server/selectRequestedJourneysByUser.php?username="+UserService.username).success
+        (function (response)
+            {
+                $scope.requestedJourneys = response.records;
+            });
+
+        $http.post("server/getAccountDetails.php?username="+UserService.username).success
+        (function (response)
+            {
+                $scope.points = parseInt(response.records.points);
+                $scope.emailaddress = response.records.emailaddress;
+            });
+
+            $scope.username = UserService.username;
+
+	});
+
+
+ app.controller('signupController', function($scope, $http, $stateParams, $state) {
+
+        $scope.processForm = function() {
+
+        $http.post("server/insertUser.php?username="+$scope.username+
+        "&email="+$scope.email+
+        "&password="+$scope.password)
+        .success(function (response)
+            {
+                //$scope.username = response;
+
+                // TODO: check for success
+
+                $state.go('signup-success', {originId: $scope.username});
+            })
+        .error(function (response)
+            {
+                var error= true;
+            }
+            
+        )}
+	});
+
+ app.controller('loginController', function($scope, $http, $stateParams, $state, $location) {
+
+        $scope.processForm = function() {
+
+        $http.post("server/attemptLogin.php?email="+$scope.email+
+        "&password="+$scope.password).success
+        (function (response)
+            {
+                $scope.username = response.records.username;
+
+                // TODO: check for success
+                setCookie('username', $scope.username, 30);
+                $location.path('/members/logging-in');
+                location.reload();
+                //location.reload();
+                //$state.go('landing-page.home', {originId: $scope.username});
+            });
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + "; Path=/";
+        }
+
+	});
+
+     app.controller('logoutController', function($scope, $http, $stateParams, $state, $timeout, $location) {
+
+             document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; Path=/;"
+
+             $timeout(function() {
+             $location.path('/home');
+             location.reload();
+             }, 100);
+
+	});
+
+         app.controller('loggingInController', function($scope, $http, $stateParams, $state, $timeout, $location) {
+
+             $timeout(function() {
+             $location.path('/members/home');
+             }, 100);
+
+	});
 
  app.controller('journeyController', function($scope, $http, $stateParams) {
 
@@ -211,6 +618,12 @@ app.controller('referenceDataController', function($scope, $http) {
 		    .then(function (response)
             {
                 $scope.journeyResults = response.data.records;
+               angular.forEach($scope.journeyResults, function(value, key){
+                   // set default value for Score if there are no votes
+                    if(!value.Score)
+                        value.Score=0;
+                    value.formattedLeaveDate = new date ('1970-30-02');
+                });
             });
 	});
 
@@ -223,6 +636,11 @@ app.controller('referenceDataController', function($scope, $http) {
 		    .then(function (response)
             {
                 $scope.journeyResults = response.data.records;
+                angular.forEach($scope.journeyResults, function(value, key){
+                   // set default value for Score if there are no votes
+                    if(!value.Score)
+                        value.Score=0;
+                });
             });
 	});
 
@@ -232,27 +650,44 @@ app.controller('referenceDataController', function($scope, $http) {
         $scope.originId = $stateParams.originId;
         $scope.destinationId = $stateParams.destinationId;
 	});
-/*
-     app.controller('addJourneyController', function($scope, $http, $stateParams) {
 
-        $scope.originCity = $stateParams.originId;
-        $scope.destinationCity = $stateParams.destinationId;
-		$http.get("server/selectJourneys.php?originId="+$scope.originCity+"+&destinationId="+$scope.destinationCity)
-		    .then(function (response)
+     app.controller('placeController', function($scope, $http, $stateParams) {
+
+        $scope.placeName = $stateParams.placeName;
+
+        $http.get("server/selectDestinationsForPlace.php?placeName="+$scope.placeName)
+            .then(function (response)
             {
-                $scope.journeyResults = response.data.records;
+                $scope.placeDestinations = response.data.records;
+            });
+
+        $http.get("server/selectOriginsForPlace.php?placeName="+$scope.placeName)
+            .then(function (response)
+            {
+                $scope.placeOrigins = response.data.records;
+            });
+
+        $http.get("server/selectTopRecommendationsForPlace.php?placeName="+$scope.placeName)
+            .then(function (response)
+            {
+                $scope.recommendations = response.data.records;
             });
 	});
 
-    app.run(function ($rootScope) {
-    $rootScope.testSubmit = function () {
-        alert("You clicked submit.");
-    };
-});
-*/
 
-app.controller('formController', function($scope, $templateCache, $http, $state) {
-//app.controller('formController', ['$state', '$stateParams', function($scope, $templateCache, $http, $stateProvider, $stateParams){
+ app.controller('prePopulatedFormController', function($scope, $http, $stateParams) {
+
+        $scope.formData.originCityName = $stateParams.origin;
+        $scope.formData.destinationCityName = $stateParams.destination;
+	});
+
+app.controller('formController', function($scope, $templateCache, $http, $state, $stateParams, UserService) {
+
+    $scope.showValidation = function(){
+        
+        $scope.displayOriginMissingError = true;
+
+    };
 
     // we will store all of our form data in this object
     $scope.formData = {
@@ -266,6 +701,8 @@ app.controller('formController', function($scope, $templateCache, $http, $state)
         "leaveYear" : "2016",
         "leaveHour" : "12",
         "leaveMinute" : "00",
+        "journeyDurationHours" : "0",
+        "journeyDurationMinutes" : "30",
         "arrivalDate" : "today",
         "arriveDay" : "01",
         "arriveMonth" : "January",
@@ -275,14 +712,14 @@ app.controller('formController', function($scope, $templateCache, $http, $state)
         "NoBorder" : true,
         "Direct" : true,
         "ModeOfTransport" : "shared taxi",
-        "CurrencyUsed" : "USD",};
+        "CurrencyUsed" : "America (United States) Dollars - USD",};
     
     
     // function to process the form
     $scope.processForm = function() {
         
         // Construct Dates
-        // 1. Determine if we need to pass today, yesterday, or a manually entered date.
+        // Determine if we need to pass today, yesterday, or a manually entered date.
         switch ($scope.formData.leaveDate) {
             case "today":
                 $today = new Date();
@@ -341,6 +778,7 @@ app.controller('formController', function($scope, $templateCache, $http, $state)
 
         $scope.formData.leaveDate = $scope.formData.leaveYear + "-" + $scope.formData.leaveMonth + "-" + $scope.formData.leaveDay;
         $scope.formData.leaveDate += " " + $scope.formData.leaveHour + ":" + $scope.formData.leaveMinute;
+                $scope.startDate = new Date($scope.formData.leaveYear, $scope.formData.leaveMonth-1, $scope.formData.leaveDay, $scope.formData.leaveHour, $scope.formData.leaveMinute);
 
         switch ($scope.formData.arrivalDate) {
             case "today":
@@ -400,7 +838,10 @@ app.controller('formController', function($scope, $templateCache, $http, $state)
 
         $scope.formData.arrivalDate = $scope.formData.arriveYear + "-" + $scope.formData.arriveMonth + "-" + $scope.formData.arriveDay;
         $scope.formData.arrivalDate += " " + $scope.formData.arriveHour + ":" + $scope.formData.arriveMinute;
-
+        $scope.endDate = new Date($scope.formData.arriveYear, $scope.formData.arriveMonth-1, $scope.formData.arriveDay, $scope.formData.arriveHour, $scope.formData.arriveMinute);
+        // create journey duration (hours)
+        var diffMs = ($scope.endDate - $scope.startDate); // milliseconds between the two dates
+        $scope.formData.duration = ((diffMs % 86400000) / 3600000);
         switch ($scope.formData.ModeOfTransport) {
             case "Taxi":
                 $scope.formData.ModeOfTransport = 1;
@@ -455,15 +896,15 @@ app.controller('formController', function($scope, $templateCache, $http, $state)
                 break;
         }
 
-
-        $http.post("server/insertJourney.php?authorId=anonymous&originCityId="+$scope.formData.originCityId+
+        $http.post("server/insertJourney.php?authorId="+UserService.username+"&originCityId="+$scope.formData.originCityId+
         "&originCityName="+$scope.formData.originCityName+
         "&originCountry="+$scope.formData.originCountry+
         "&destinationCityId="+$scope.formData.destinationCityId+
         "&destinationCityName="+$scope.formData.destinationCityName+
         "&destinationCountry="+$scope.formData.destinationCountry+
-        "&leaveDateTime="+$scope.formData.arrivalDate+
-        "&arrivalDateTime="+$scope.formData.leaveDate+
+        "&leaveDateTime="+$scope.formData.leaveDate+
+        "&arrivalDateTime="+$scope.formData.arrivalDate+
+        "&duration="+$scope.formData.duration+
         "&mode="+ $scope.formData.ModeOfTransport +
         "&currencyUsed="+$scope.formData.CurrencyUsed+
         "&price="+$scope.formData.Price+
@@ -471,21 +912,25 @@ app.controller('formController', function($scope, $templateCache, $http, $state)
         (function (response)
             {
                 $scope.formData.resultId = response;
-                //window.location = "./journeyAdded.php?id="+$scope.formData.resultId;
-
+                // redirect to success page
                 $state.go('form.success', {originId: $scope.formData.originCityName, destinationId: $scope.formData.destinationCityName, journeyId: $scope.formData.resultId});
             });
+
+        // add 5 users to the user for adding this journey
+        $http.post("server/addUserPoints.php?username="+UserService.username+"&points=5").success
+        (function (response)
+        {
+            // todo: check for success/error
+        })
+
+        $http.post("server/updateRequestedJourneyStatus.php?origin="+$scope.formData.originCityName+"&destination="+$scope.formData.destinationCityName+"&status=Pending&userId="+UserService.username).success
+        (function (response)
+        {
+            // todo: check for success/error
+        })
     };
 
 });
-
-/**
- * @ngdoc overview
- * @name angular-step
- *
- * @description
- * An AngularJS way of building clean "wizard" like applications.
- */
 
 angular.module('angular.step', [])
 
@@ -571,16 +1016,7 @@ angular.module('angular.step', [])
 
 }])
 
-/**
- * @ngdoc directive
- * @name stepset
- * @restrict EA TODO: This may or may not be correct.
- *
- * @description
- * Stepset is the outer container for a set of ordered steps.
- * @example
- * TODO: Put example here.
- */.directive('stepset', function () {
+.directive('stepset', function () {
     return {
         restrict: 'EA',
         transclude: true,
@@ -598,17 +1034,7 @@ angular.module('angular.step', [])
     };
 })
 
-
-/**
- * @ngdoc directive
- * @name step
- * @restrict EA TODO: this may or may not be correct
- *
- * @description
- * A Step is a single item that is displayed in the step set.
- * @example
- * TODO: put example here.
- */.directive('step', ['$parse', function ($parse) {
+.directive('step', ['$parse', function ($parse) {
     var d = this;
     return {
         require: '^stepset',
@@ -632,33 +1058,3 @@ angular.module('angular.step', [])
         }
     };
 }]);
-
-/*
-'use strict';
-
-angular.module('mgcrea.ngStrapDocs')
-
-.controller('TypeaheadDemoCtrl', function($scope, $templateCache, $http) {
-
-  $scope.selectedState = '';
-  $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-
-  $scope.selectedIcon = '';
-  $scope.icons = [
-    {value: 'Gear', label: '<i class="fa fa-gear"></i> Gear'},
-    {value: 'Globe', label: '<i class="fa fa-globe"></i> Globe'},
-    {value: 'Heart', label: '<i class="fa fa-heart"></i> Heart'},
-    {value: 'Camera', label: '<i class="fa fa-camera"></i> Camera'}
-  ];
-
-  $scope.selectedAddress = '';
-  $scope.getAddress = function(viewValue) {
-    var params = {address: viewValue, sensor: false};
-    return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {params: params})
-    .then(function(res) {
-      return res.data.results;
-    });
-  };
-
-});
-*/

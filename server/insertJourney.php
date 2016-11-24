@@ -11,6 +11,7 @@
         $destinationCountry = $_GET['destinationCountry'];
 		$leaveDateTime = $_GET['leaveDateTime'];
         $arrivalDateTime = $_GET['arrivalDateTime'];
+        $duration = $_GET['duration'];
 		$mode = $_GET['mode'];
         $currencyUsed = $_GET['currencyUsed'];
         $price = $_GET['price'];
@@ -25,6 +26,7 @@
             DestinationCountry,
             LeaveDateTime,
             ArrivalDateTime,
+            Duration,
             Mode,
             CurrencyUsed,
             Price,
@@ -40,6 +42,7 @@
                 '$destinationCountry',
                 '$leaveDateTime',
                 '$arrivalDateTime',
+                '$duration',
                 '$mode',
                 '$currencyUsed',
                 '$price',

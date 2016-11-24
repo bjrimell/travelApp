@@ -15,16 +15,20 @@ js.PositiveVotes,
 js.Instruction,
 js.LeaveDateTime,
 js.ArrivalDateTime,
+js.Duration,
 js.originCountry,
 js.destinationCountry,
 m.Name AS 'ModeOfTransport',
 m.Icon AS 'ModeIcon',
 js.Price AS 'Price',
 js.CurrencyUsed AS 'CurrencyUsed',
-js.Direct
+js.Direct,
+(SELECT COUNT(*) FROM Vote Where JourneySuggestionId = js.Id AND Value=1) AS Upvote,
+(SELECT COUNT(*) FROM Vote Where JourneySuggestionId = js.Id AND Value=-1) AS Downvote,
+(SELECT SUM(Value) FROM Vote Where JourneySuggestionId = js.Id) AS Score
 FROM JourneySuggestion js
 LEFT JOIN Mode m ON js.Mode = m.Id
-INNER JOIN user AS author ON author.username = js.authorId
+INNER JOIN User AS author ON author.username = js.authorId
 WHERE js.Id = '$journeyId';");
 //WHERE originName = '$originId' AND destinationName = '$destinationId';");
 $outp = "";
@@ -36,8 +40,9 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $outp .= '"OriginCountryCode":"'  . strtolower($rs["originCountry"]) . '",';
     $outp .= '"Destination":"'  . $rs["Destination"] . '",';
     $outp .= '"DestinationCountryCode":"'  . strtolower($rs["destinationCountry"]) . '",';
-    $outp .= '"NegativeVotes":"'  . $rs["NegativeVotes"] . '",';
-    $outp .= '"PositiveVotes":"'  . $rs["PositiveVotes"] . '",';
+    $outp .= '"Upvote":"'  . $rs["Upvote"] . '",';
+    $outp .= '"Downvote":"'  . $rs["Downvote"] . '",';
+    $outp .= '"Score":"' . $rs["Score"] . '",';
     $outp .= '"Instruction":"'  . $rs["Instruction"] . '",';
     $outp .= '"Author":"'  . $rs["Author"] . '",';
     $outp .= '"Direct":"'  . $rs["Direct"] . '",';
@@ -45,6 +50,7 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $outp .= '"ModeIcon":"'  . $rs["ModeIcon"] . '",';
     $outp .= '"Price":"'  . $rs["Price"] . '",';
     $outp .= '"CurrencyUsed":"'  . $rs["CurrencyUsed"] . '",';
+    $outp .= '"Duration":"'  . $rs["Duration"] . '",';
     $outp .= '"LeaveDateTime":"'  . $rs["LeaveDateTime"] . '",';
     // Find children for this row      
         $subResult = $conn->query("SELECT js.Id,

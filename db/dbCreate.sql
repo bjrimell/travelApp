@@ -3,22 +3,18 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 04, 2016 at 10:21 PM
+-- Generation Time: Oct 19, 2016 at 06:34 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `PlanetCracker`
 --
+CREATE DATABASE IF NOT EXISTS `PlanetCracker` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `PlanetCracker`;
 
 -- --------------------------------------------------------
 
@@ -48926,10 +48922,15 @@ CREATE TABLE `JourneySuggestion` (
   `Id` int(11) NOT NULL,
   `AuthorId` varchar(150) NOT NULL,
   `JourneyId` int(11) NOT NULL,
-  `Origin` int(11) NOT NULL,
+  `Origin` varchar(50) NOT NULL,
+  `OriginName` varchar(250) NOT NULL,
+  `originCountry` varchar(2) NOT NULL,
   `LeaveDateTime` datetime NOT NULL,
-  `Destination` int(11) NOT NULL,
-  `ArrivalDateTime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `Destination` varchar(50) NOT NULL,
+  `DestinationName` varchar(250) NOT NULL,
+  `destinationCountry` varchar(2) NOT NULL,
+  `ArrivalDateTime` datetime NOT NULL,
+  `Duration` double NOT NULL,
   `PositiveVotes` int(11) NOT NULL,
   `NegativeVotes` int(11) NOT NULL,
   `Instruction` varchar(500) NOT NULL,
@@ -48944,11 +48945,194 @@ CREATE TABLE `JourneySuggestion` (
 -- Dumping data for table `JourneySuggestion`
 --
 
-INSERT INTO `JourneySuggestion` (`Id`, `AuthorId`, `JourneyId`, `Origin`, `LeaveDateTime`, `Destination`, `ArrivalDateTime`, `PositiveVotes`, `NegativeVotes`, `Instruction`, `Mode`, `Direct`, `Price`, `CurrencyUsed`, `ParentId`) VALUES
-(1, 'Bazza', 0, 13454, '2016-09-27 12:00:00', 12688, '2016-10-04 18:50:04', 12, 3, 'Maybe not the fastest route, but the flights from Monteria are more reliable than those from Corozal.', 0, 0, 50000, 'USD', 0),
-(2, 'Bazza', 0, 13454, '2016-08-12 11:45:00', 12688, '2016-10-04 18:49:45', 0, 0, 'Almost missed my flight, but made it!', 1, 1, 50000, 'USD', 0),
-(3, 'Bazza', 0, 13454, '2016-09-27 12:00:00', 13471, '2016-10-04 20:41:40', 78, 34, 'lorem ipsum', 3, 1, 300, 'USD', 1),
-(4, 'anonymous', 0, 13471, '2016-09-27 12:00:00', 13029, '2016-10-04 20:55:55', 0, 0, 'This is another child of the first one.', 0, 1, 0, 'USD', 1);
+INSERT INTO `JourneySuggestion` (`Id`, `AuthorId`, `JourneyId`, `Origin`, `OriginName`, `originCountry`, `LeaveDateTime`, `Destination`, `DestinationName`, `destinationCountry`, `ArrivalDateTime`, `Duration`, `PositiveVotes`, `NegativeVotes`, `Instruction`, `Mode`, `Direct`, `Price`, `CurrencyUsed`, `ParentId`) VALUES
+(1, 'Bazza', 0, '13454', '', '', '2016-09-27 12:00:00', '12688', '', '', '2016-10-04 18:50:04', 0, 12, 3, 'Maybe not the fastest route, but the flights from Monteria are more reliable than those from Corozal.', 0, 0, 50000, 'USD', 0),
+(2, 'Bazza', 0, '13454', '', '', '2016-08-12 11:45:00', '12688', '', '', '2016-10-04 18:49:45', 0, 0, 0, 'Almost missed my flight, but made it!', 1, 1, 50000, 'USD', 0),
+(3, 'Bazza', 0, '13454', '', '', '2016-09-27 12:00:00', '13471', '', '', '2016-10-04 20:41:40', 0, 78, 34, 'lorem ipsum', 3, 1, 300, 'USD', 1),
+(4, 'anonymous', 0, '13471', '', '', '2016-09-27 12:00:00', '13029', '', '', '2016-10-06 09:46:19', 0, 0, 0, 'This is another child of the first one.', 2, 1, 0, 'USD', 1),
+(5, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, '$instructions', 0, 1, 0, '$cu', 0),
+(6, 'anonymous', 0, '13454', '', '', '2016-12-12 00:00:00', '13471', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(7, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'und', 0),
+(8, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'und', 0),
+(9, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'und', 0),
+(10, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'und', 0),
+(11, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'testing', 3, 1, 0, 'und', 0),
+(12, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'testing', 3, 1, 0, 'und', 0),
+(13, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'testing', 3, 1, 0, 'und', 0),
+(14, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'testing', 3, 1, 0, 'und', 0),
+(15, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'from the web', 3, 1, 234000, 'COP', 0),
+(16, 'anonymous', 0, '0', '', '', '1982-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(17, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(18, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(19, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(20, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(21, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(22, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(23, 'anonymous', 0, '0', '', '', '2016-01-01 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(24, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'testing those dates!', 3, 1, 0, 'USD', 0),
+(25, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'dates weird', 3, 1, 0, 'USD', 0),
+(26, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'sdsaas', 3, 1, 0, 'USD', 0),
+(27, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(28, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(29, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(30, 'anonymous', 0, '0', '', '', '2016-10-07 17:13:38', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(31, 'anonymous', 0, '0', '', '', '2016-10-07 17:14:30', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(32, 'anonymous', 0, '0', '', '', '2016-10-13 10:43:46', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'yo', 3, 1, 123000, 'USD', 0),
+(33, 'anonymous', 0, '0', '', '', '2016-10-13 11:08:07', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'test', 3, 1, 123, 'USD', 0),
+(34, 'anonymous', 0, '0', '', '', '2016-10-13 11:08:07', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'test', 3, 1, 123, 'USD', 0),
+(35, 'anonymous', 0, '0', '', '', '2016-10-13 11:11:02', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'testing', 3, 1, 0, 'USD', 0),
+(36, 'anonymous', 0, '0', '', '', '2016-10-13 11:11:02', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'testing', 3, 1, 0, 'USD', 0),
+(37, 'anonymous', 0, '0', '', '', '2016-10-13 11:14:14', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'xsddsdssdaa', 3, 1, 0, 'USD', 0),
+(38, 'anonymous', 0, '0', '', '', '2016-10-13 11:15:02', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'xdssdsd', 3, 1, 0, 'USD', 0),
+(39, 'anonymous', 0, '0', '', '', '2016-12-12 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'xdsdfsd', 3, 1, 0, 'USD', 0),
+(40, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, '', 0, 1, 0, '', 0),
+(41, 'anonymous', 0, '13454', '', '', '2016-12-12 00:00:00', '13471', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(42, 'anonymous', 0, '0', '', '', '2016-10-13 11:18:28', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this works!!!', 3, 1, 0, 'USD', 0),
+(43, 'anonymous', 0, '0', '', '', '2016-10-13 11:18:28', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this works!!!', 3, 1, 0, 'USD', 0),
+(44, 'anonymous', 0, '0', '', '', '2016-10-13 11:18:28', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this works!!!', 3, 1, 0, 'USD', 0),
+(45, 'anonymous', 0, '0', '', '', '2016-10-13 11:18:28', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this works!!!', 3, 1, 0, 'USD', 0),
+(46, 'anonymous', 0, '0', '', '', '2016-01-01 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'sadfg', 3, 1, 123, 'USD', 0),
+(47, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'today and yesterrday i think', 3, 1, 123, 'USD', 0),
+(48, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'undefined', 3, 1, 0, 'USD', 0),
+(49, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'asdf', 3, 1, 1234, 'USD', 0),
+(50, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'dfg', 3, 1, 123, 'USD', 0),
+(51, 'anonymous', 0, '0', '', '', '2015-10-07 12:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'wert', 3, 1, 123, 'USD', 0),
+(52, 'anonymous', 0, '0', '', '', '0000-00-00 00:00:00', '0', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'sdf', 3, 1, 123, 'USD', 0),
+(53, 'anonymous', 0, 'ChIJ41xJuq57ZIgRkN_2gzhAfTU', '', '', '0000-00-00 00:00:00', 'ChIJV4FfHcU28YgR5xBP7BC8hGY', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'sdf', 3, 1, 123, 'USD', 0),
+(54, 'anonymous', 0, 'ChIJr2prqsdmelMR-fHnN-lBG4g', '', '', '2016-10-13 12:00:00', 'ChIJj0i_N0xaozsR1Xx10YzS8UE', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'asdf', 3, 1, 12345, 'USD', 0),
+(55, 'anonymous', 0, 'ChIJr2prqsdmelMR-fHnN-lBG4g', '', '', '2016-10-13 12:00:00', 'ChIJj0i_N0xaozsR1Xx10YzS8UE', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'asdf with COP', 3, 1, 12345, 'COP', 0),
+(56, 'anonymous', 0, 'ChIJr2prqsdmelMR-fHnN-lBG4g', '', '', '2016-10-13 17:15:00', 'ChIJj0i_N0xaozsR1Xx10YzS8UE', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'asdf with COP plane', 3, 1, 12345, 'COP', 0),
+(57, 'anonymous', 0, 'ChIJtRkkqIKyCVMRno6bQJpHqbA', '', '', '2016-10-13 12:00:00', 'ChIJ49ExeWml-IgRnhcF9TKh_7k', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'sdf', 4, 1, 123, 'USD', 0),
+(58, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', '', '', '2016-10-13 15:00:00', 'ChIJKcumLf2bP44RFDmjIFVjnSM', '', '', '2016-10-13 16:24:03', 0, 0, 0, 'this is a test from the web!', 3, 1, 1234, 'USD', 0),
+(59, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', '', '', '2016-10-13 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'sdfgb', 4, 1, 123, 'USD', 0),
+(60, 'anonymous', 0, '13454', '', '', '2016-12-12 00:00:00', '13471', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(61, 'anonymous', 0, '13454', '', '', '2016-12-12 00:00:00', '13471', '', '', '2016-10-13 16:50:35', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(62, 'anonymous', 0, '13454', 'Woodway, Hutton', '', '2016-12-12 00:00:00', '13471', 'this is also a place', '', '2016-10-13 16:50:35', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(63, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', '', '2016-10-13 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', '', '2016-10-13 16:50:35', 0, 0, 0, 'this is another test that should work!', 4, 1, 123, 'USD', 0),
+(64, '', 0, 'ChIJwfYXm_CV2EcRWSrpWWVgh4U', 'Brentwood, United Kingdom', '', '2016-10-12 15:30:00', 'ChIJX48Hr8K-2EcRfQ1uq31_LF0', 'Shenfield, Brentwood, United Kingdom', '', '2016-10-13 14:30:00', 0, 0, 0, 'this is a hopefully working end to end example', 4, 1, 1234, 'USD', 0),
+(65, 'anonymous', 0, 'ChIJwfYXm_CV2EcRWSrpWWVgh4U', 'Brentwood, United Kingdom', '', '2016-10-13 18:30:00', 'ChIJX48Hr8K-2EcRfQ1uq31_LF0', 'Shenfield, Brentwood, United Kingdom', '', '2016-10-13 17:45:00', 0, 0, 0, 'first working end to end?', 3, 1, 654, 'GBP', 0),
+(66, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'th', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(67, 'anonymous', 0, 'ChIJdd4hrwug2EcRmSrV3Vo6llI', 'London, United Kingdom', '', '2016-10-13 12:00:00', 'ChIJW-T2Wt7Gt4kRKl2I1CJFUsI', 'Washington, DC, United States', 'Wa', '2016-10-13 12:00:00', 0, 0, 0, 'dsfgbn country code', 4, 1, 1234, 'USD', 0),
+(68, 'anonymous', 0, 'ChIJPTacEpBQwokRKwIlDXelxkA', 'Statue of Liberty National Monument, New York, NY, United States', 'US', '2016-10-13 12:00:00', 'ChIJYeZuBI9YwokRjMDs_IEyCwo', 'Manhattan, New York, NY, United States', 'US', '2016-10-13 12:00:00', 0, 0, 0, 'jfhhd', 4, 1, 1234, 'USD', 0),
+(69, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'CO', '2016-10-13 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'CO', '2016-10-13 12:00:00', 0, 0, 0, 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estÃ¡ndar de las industrias desde el aÃ±o 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usÃ³ una galerÃ­a de textos y los mezclÃ³ de tal manera que logrÃ³ hacer un libro de textos especimen. No sÃ³lo sobreviviÃ³ 500 aÃ±os, sino que tambien ingresÃ³ como texto de relleno en documentos electrÃ³nicos, quedando esencialmente igual al orig', 3, 1, 5, 'GBP', 0),
+(70, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(71, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(72, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(73, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(74, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(75, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(76, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(77, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(78, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(79, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(80, 'anonymousy=GB', 0, '13454', 'Woodway, Hutton', '', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(81, '', 0, '', 'Woodway, Hutton', '', '2016-12-12 00:00:00', '13471', 'this is also a place', '', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(82, '', 0, '', '', '', '0000-00-00 00:00:00', '', '', '', '0000-00-00 00:00:00', 0, 0, 0, '', 0, 1, 0, '', 0),
+(83, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(84, 'anonymousy=GB', 0, '13454', 'Woodway, Hutton', '', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(85, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(86, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(87, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(88, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(89, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(90, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(91, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(92, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(93, 'anonymous', 0, 'ChIJ41xJuq57ZIgRkN_2gzhAfTU', 'Brentwood, TN, United States', 'us', '2016-10-13 12:00:00', 'ChIJW6AIkVXemwARTtIvZ2xC3FA', 'Rio de Janeiro - State of Rio de Janeiro, Brazil', 'br', '2016-10-13 12:00:00', 0, 0, 0, 'lorem ipsum!', 4, 1, 1234, 'USD', 0),
+(94, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'testing', 4, 1, 0, 'USD', 0),
+(95, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'woohoo', 4, 1, 0, 'USD', 0),
+(96, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'dfddf', 4, 1, 0, 'USD', 0),
+(97, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'sdffsdas', 4, 1, 0, 'USD', 0),
+(98, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(99, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'scdd', 4, 1, 0, 'USD', 0),
+(100, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(101, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(102, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(103, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(104, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(105, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(106, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(107, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(108, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(109, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(110, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(111, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(112, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(113, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(114, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(115, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(116, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(117, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(118, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(119, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(120, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(121, 'anonymous', 0, 'ChIJPW-XS4YPdkgR-GWlHng4qkg', 'Stamford Bridge, Fulham Road, London, United Kingdom', 'gb', '2016-10-12 12:00:00', 'ChIJXQj8Jcan2EcRh50IDls6xj8', 'Upton Park, Stratford, London, United Kingdom', 'gb', '2016-10-12 12:00:00', 0, 0, 0, 'testing', 3, 1, 1234, 'USD', 0),
+(122, 'anonymous', 0, '13454', 'Woodway, Hutton', 'GB', '2016-12-12 00:00:00', '13471', 'this is also a place', 'CO', '2016-12-12 00:00:00', 0, 0, 0, 'this_is_an_instruction', 3, 1, 123000, 'COP', 0),
+(123, 'anonymous', 0, 'undefined', 'undefined', 'un', '2016-10-13 12:00:00', 'undefined', 'undefined', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'adsdfsd', 4, 1, 0, 'USD', 0),
+(124, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(125, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'hello world', 4, 1, 0, 'USD', 0),
+(126, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'scdfasdsd', 4, 1, 0, 'USD', 0),
+(127, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(128, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'dsdffd', 4, 1, 0, 'USD', 0),
+(129, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(130, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'zxx', 4, 1, 0, 'USD', 0),
+(131, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(132, 'anonymous', 0, 'undefined', 'undefined', 'un', '2016-10-13 12:00:00', 'undefined', 'undefined', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'sdsdsd', 4, 1, 0, 'USD', 0),
+(133, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(134, 'anonymous', 0, '', '', 'un', '2016-10-13 12:00:00', '', '', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(135, 'anonymous', 0, 'undefined', 'undefined', 'un', '2016-10-13 12:00:00', 'undefined', 'undefined', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'dssdds', 4, 1, 0, 'USD', 0),
+(136, 'anonymous', 0, 'undefined', 'Becket House, New Road, Brentwood', 'un', '2016-10-13 12:00:00', 'undefined', 'London', 'un', '2016-10-13 12:00:00', 0, 0, 0, 'ddfdss', 4, 1, 1234, 'USD', 0),
+(137, 'anonymous', 0, 'ChIJkaOgrszcY48RMki_MqSLmFc', 'Copan Ruinas, CopÃ¡n Department, Honduras', 'hn', '2016-10-14 15:00:00', 'ChIJUT10v7qib48R08lqIDgiz2g', 'Tegucigalpa, Francisco MorazÃ¡n Department, Honduras', 'hn', '2016-10-14 14:00:00', 0, 0, 0, 'Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza clÂ´sica de la literatura del Latin, que data del aÃ±o 45 antes de Cristo, haciendo que este adquiera mas de 2000 aÃ±os de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontrÃ³ una de las palabras mÃ¡s oscuras de la lengua del latÃ­n, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos ', 4, 1, 123, 'USD', 0),
+(138, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-13 08:30:00', 'ChIJi7-268M4Wo4RGuZolnn72G0', 'MonterÃ­a, Cordoba, Colombia', 'co', '2016-10-13 06:00:00', 0, 0, 0, 'Get a seat next to the window if your flight is early.', 4, 1, 450000, 'COP', 0),
+(139, 'anonymous', 0, 'ChIJkaOgrszcY48RMki_MqSLmFc', 'Copan Ruinas, CopÃ¡n Department, Honduras', 'hn', '2016-10-14 12:00:00', 'ChIJCfzfvUmpaI8RgPMZidB9LcY', 'Tegucigalpa, Honduras', 'hn', '2016-10-14 12:00:00', 0, 0, 0, 'lorem ipsumisiumums', 4, 1, 123, 'USD', 0),
+(140, 'anonymous', 0, 'ChIJaX_k53Kue0gRScxJi_CVlMY', 'Manchester United Football Club, Sir Matt Busby Way, Manchester, United Kingdom', 'gb', '2016-10-13 16:00:00', 'ChIJZZlxdWkddkgRzljRmmxhDeU', 'West Ham United FC, London, United Kingdom', 'gb', '2016-10-13 13:00:00', 0, 0, 0, 'undefined', 4, 1, 120, 'GBP', 0),
+(141, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(142, 'anonymous', 0, 'ChIJ41xJuq57ZIgRkN_2gzhAfTU', 'Brentwood, TN, United States', 'us', '2016-10-14 12:00:00', 'ChIJXQj8Jcan2EcRh50IDls6xj8', 'Upton Park, Stratford, London, United Kingdom', 'gb', '2016-10-14 12:00:00', 0, 0, 0, 'sadvfdx', 4, 1, 123, 'USD', 0),
+(143, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(144, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'dsdd', 4, 1, 0, 'USD', 0),
+(145, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'does it? does it????', 4, 1, 0, 'USD', 0),
+(146, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'another', 4, 1, 0, 'USD', 0),
+(147, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'daddsfd', 4, 1, 0, 'USD', 0),
+(148, 'anonymous', 0, 'ChIJCd4Cz2JfGzkRdX3PoyV56VI', 'Basolda, Himachal Pradesh, India', 'in', '2016-10-14 12:00:00', 'ChIJmwu6Wr8Z2jERkPvpR-2QC9k', 'Little India Singapore', 'sg', '2016-10-14 12:00:00', 0, 0, 0, 'xczdsdsasd', 4, 1, 123, 'USD', 0),
+(149, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(150, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'sd', 4, 1, 2233, 'USD', 0),
+(151, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'sddds', 4, 1, 0, 'USD', 0),
+(152, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'sddsdds', 4, 1, 0, 'USD', 0),
+(153, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'ssdsdsd', 4, 1, 0, 'USD', 0),
+(154, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'undefined', 4, 1, 0, 'USD', 0),
+(155, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'this is friday night test', 5, 1, 123, 'COP', 0),
+(156, 'anonymous', 0, '', '', 'un', '2016-10-14 12:00:00', '', '', 'un', '2016-10-14 12:00:00', 0, 0, 0, 'cxdfdf', 4, 1, 0, 'USD', 0),
+(157, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-13 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'cxdfdfsdfvfd', 5, 1, 123, 'USD', 0),
+(158, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'sdsdsddsdsxzxxadssd sdkdkdsjk', 4, 1, 123, 'USD', 0),
+(159, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-13 12:00:00', 0, 0, 0, 'hello world', 4, 1, 1234, 'COP', 0),
+(160, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'assdddssd', 4, 1, 0, 'USD', 0),
+(161, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'sd,mds,msdkmsd  hsdjhdsjhds', 4, 1, 99, 'GBP', 0),
+(162, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'sdfdsfa', 4, 1, 0, 'USD', 0),
+(163, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'wewrtrsea', 4, 1, 234, 'USD', 0),
+(164, 'anonymous', 0, 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-14 12:00:00', 'ChIJUROdrucl9o4RyiY_Ay45YbE', 'Cartagena - Bolivar, Colombia', 'co', '2016-10-14 12:00:00', 0, 0, 0, 'fddssdsdfc', 4, 1, 234, 'USD', 0),
+(165, 'anonymous', 0, 'ChIJwfYXm_CV2EcRWSrpWWVgh4U', 'Brentwood, United Kingdom', 'gb', '2016-10-16 12:00:00', 'ChIJWSVoUyg8WY4RZNNnMbXXCvo', 'Corozal, Sucre, Colombia', 'co', '2016-10-16 12:00:00', 0, 0, 0, 'dsffsssv', 4, 1, 1, 'USD', 0),
+(166, 'anonymous', 0, 'undefined', 'Hammersmith', 'un', '2016-10-17 14:30:00', 'ChIJ2dGMjMMEdkgRqVqkuXQkj7c', 'Big Ben, London, United Kingdom', 'gb', '2016-10-17 14:00:00', 0, 0, 0, 'Take the district line to Westminster tube station. Easy really.', 4, 1, 5, 'GBP', 0),
+(167, 'anonymous', 0, 'ChIJ21P2rgUrTI8Ris1fYjy3Ms4', 'CancÃºn, Mexico', 'mx', '2016-10-17 17:00:00', 'ChIJSyrkEAPUT48Rt5r_k9vA7Q4', 'Tulum, Mexico', 'mx', '2016-10-17 15:00:00', 0, 0, 0, 'You can hail the colectivo from the side of the main road.', 5, 1, 150, 'COP', 0),
+(168, 'anonymous', 0, 'ChIJ2_UmUkxNekgRqmv-BDgUvtk', 'Manchester, United Kingdom', 'gb', '2016-10-18 12:00:00', 'ChIJL6wn6oAOZ0gRoHExl6nHAAo', 'Dublin, Ireland', 'ie', '2016-10-18 12:00:00', 0, 0, 0, 'undefined', 4, 1, 123, 'USD', 0),
+(169, 'anonymous', 0, '', '', 'un', '2016-10-18 12:00:00', '', '', 'un', '2016-10-18 12:00:00', 0, 0, 0, 'this is a test', 4, 1, 0, 'USD', 0),
+(170, 'anonymous', 0, '', '', 'un', '2016-10-18 18:00:00', '', '', 'un', '0000-00-00 00:00:00', 0, 0, 0, 'test', 4, 1, 1234, 'USD', 0),
+(171, 'anonymous', 0, '', '', 'un', '2016-10-18 17:00:00', '', '', 'un', '0000-00-00 00:00:00', 0, 0, 0, 'sdffd', 4, 1, 23, 'USD', 0),
+(172, 'anonymous', 0, '', '', 'un', '2016-10-18 20:00:00', '', '', 'un', '0000-00-00 00:00:00', 0, 0, 0, 'ddsdss', 4, 1, 23, 'USD', 0),
+(173, 'anonymous', 0, 'ChIJuyD2XARakWsRwITe81qjAgU', 'Brisbane City, Queensland, Australia', 'au', '2016-10-18 20:00:00', 'ChIJK3Y-LYVikGsR0PJDkLQJBgQ', 'Byron Bay, New South Wales, Australia', 'au', '0000-00-00 00:00:00', 0, 0, 0, 'ddsdss', 4, 1, 23, 'USD', 0),
+(174, 'anonymous', 0, 'ChIJuyD2XARakWsRwITe81qjAgU', 'Brisbane City, Queensland, Australia', 'au', '2016-10-18 22:00:00', 'ChIJP5iLHkCuEmsRwMwyFmh9AQU', 'Sydney, New South Wales, Australia', 'au', '0000-00-00 00:00:00', 0, 0, 0, 'test', 4, 1, 124, 'USD', 0),
+(175, 'anonymous', 0, 'ChIJPW-XS4YPdkgR-GWlHng4qkg', 'Stamford Bridge, Fulham Road, London, United Kingdom', 'gb', '2016-10-18 14:00:00', 'ChIJXQj8Jcan2EcRh50IDls6xj8', 'Upton Park, Stratford, London, United Kingdom', 'gb', '0000-00-00 00:00:00', 0, 0, 0, 'stick your blue flag up your ass!', 4, 1, 5, 'GBP', 0),
+(176, 'anonymous', 0, 'ChIJC7zHsmShwokRbrc0nIuGQ4c', 'Stamford, CT, United States', 'us', '2016-10-18 14:00:00', 'ChIJkco26yyZToYRxpHfXQpOyNY', 'Uptown, Dallas, TX, United States', 'us', '0000-00-00 00:00:00', 0, 0, 0, 'testing', 4, 1, 5, 'USD', 0),
+(177, 'anonymous', 0, 'ChIJPW-XS4YPdkgR-GWlHng4qkg', 'Stamford Bridge, Fulham Road, London, United Kingdom', 'gb', '2016-10-18 17:00:00', 'ChIJXQj8Jcan2EcRh50IDls6xj8', 'Upton Park, Stratford, London, United Kingdom', 'gb', '2016-10-18 12:00:00', 0, 0, 0, 'testing of 5 hours', 4, 1, 234, 'USD', 0),
+(178, 'anonymous', 0, 'ChIJW-T2Wt7Gt4kRKl2I1CJFUsI', 'D.C., DC, United States', 'us', '2016-10-18 15:30:00', 'ChIJS5dFe_cZTIYRj2dH9qSb7Lk', 'Dallas, TX, United States', 'us', '2016-10-18 12:00:00', 0, 0, 0, 'sdsdsds', 4, 1, 123, 'USD', 0),
+(179, 'anonymous', 0, '', '', 'un', '2015-08-06 12:00:00', '', '', 'un', '2016-10-17 12:00:00', 0, 0, 0, 'test', 4, 1, 234, 'USD', 0),
+(180, 'anonymous', 0, 'ChIJIQBpAG2ahYAR_6128GcTUEo', 'San Francisco, CA, United States', 'us', '2016-10-18 14:45:00', 'ChIJzxcfI6qAa4cR1jaKJ_j0jhE', 'Denver, CO, United States', 'us', '2016-10-18 12:00:00', 0, 0, 0, 'ddssd', 4, 1, 23, 'USD', 0),
+(181, 'anonymous', 0, '', '', 'un', '2016-10-18 21:45:00', '', '', 'un', '2016-10-18 12:00:00', 0, 0, 0, 'dsfdfds', 4, 1, 234, 'USD', 0),
+(182, 'anonymous', 0, 'ChIJIQBpAG2ahYAR_6128GcTUEo', 'San Francisco, CA, United States', 'us', '2016-10-18 21:45:00', 'ChIJ_UoMkUXKcFMRY5Ss2r6ur8o', 'Banff, AB, Canada', 'ca', '2016-10-17 06:00:00', 0, 0, 0, 'dsfdfds', 4, 1, 234, 'USD', 0),
+(183, 'anonymous', 0, 'ChIJX30LbX-CcEgRCFjYEdWzRxs', 'Stafford, United Kingdom', 'gb', '2016-10-18 18:45:00', 'ChIJQaigHdkJ2EcR0a0u1aziyQg', 'Huntingdon, United Kingdom', 'gb', '2016-10-17 12:00:00', 0, 0, 0, 'thensjdnjsd nj fjdfnjsdnsdj sjj sdsdn', 4, 1, 234, 'USD', 0),
+(184, 'anonymous', 0, 'ChIJqaUj8fBLzEwRZ5UY3sHGz90', 'New York, United States', 'us', '2016-10-18 06:30:00', 'ChIJdd4hrwug2EcRmSrV3Vo6llI', 'London, United Kingdom', 'gb', '2016-10-17 23:00:00', 0, 0, 0, 'gfgfg', 4, 1, 67, 'USD', 0),
+(185, 'anonymous', 0, 'ChIJIQBpAG2ahYAR_6128GcTUEo', 'San Francisco, CA, United States', 'us', '2016-10-17 22:00:00', 'ChIJS5dFe_cZTIYRj2dH9qSb7Lk', 'Dallas, TX, United States', 'us', '2016-10-18 02:30:00', 0, 0, 0, 'asjsdjsd should be 4.5 hours', 4, 1, 234, 'USD', 0),
+(186, 'anonymous', 0, 'ChIJBeB5Twbb_3sRKIbMdNKCd0s', 'Hawaii, United States', 'us', '2016-10-17 23:00:00', 'ChIJqaUj8fBLzEwRZ5UY3sHGz90', 'New York, United States', 'us', '2016-10-18 02:30:00', 3.5, 0, 0, '3.5 hours should be', 4, 1, 2345, 'USD', 0),
+(187, 'anonymous', 0, 'ChIJPW-XS4YPdkgR-GWlHng4qkg', 'Stamford Bridge, Fulham Road, London, United Kingdom', 'gb', '2016-10-18 12:00:00', 'ChIJXQj8Jcan2EcRh50IDls6xj8', 'Upton Park, Stratford, London, United Kingdom', 'gb', '2016-10-18 13:15:00', 1.25, 0, 0, 'rickshaw journey', 4, 1, 56, 'USD', 0);
 
 -- --------------------------------------------------------
 
@@ -49022,8 +49206,73 @@ CREATE TABLE `Mode` (
 INSERT INTO `Mode` (`Id`, `Name`, `Icon`) VALUES
 (1, 'Taxi', 'fa fa-taxi'),
 (2, 'Shared Taxi', 'fa fa-taxi'),
-(3, 'Aeroplane', 'fa fa-plane'),
-(4, 'Walking', 'md md-directions-walk');
+(3, 'Airplane', 'fa fa-plane'),
+(4, 'Walking', 'md md-directions-walk'),
+(5, 'Bus', 'fa-bus'),
+(6, 'Coach', 'fa-bus'),
+(7, 'Rickshaw', 'fa-truck'),
+(8, 'Bicycle', 'fa fa-bicycle'),
+(9, 'Motorcylce', 'fa fa-motorcycle'),
+(10, 'Large Boat', 'fa fa-ship'),
+(11, 'Motorized Boat', 'fa fa-ship'),
+(12, 'Metro/Subway', 'fa fa-subway'),
+(13, 'Other', 'fa fa-rocket'),
+(14, 'Shuttle', 'fa fa-bus'),
+(15, 'MotoTaxi', 'fa fa-motorcycle'),
+(16, 'Hitch', 'fa fa-hand-o-right');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Recommendation`
+--
+
+CREATE TABLE `Recommendation` (
+  `Id` int(11) NOT NULL,
+  `PlaceName` varchar(250) NOT NULL,
+  `Category` int(11) NOT NULL,
+  `RecommendationPlaceName` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Recommendation`
+--
+
+INSERT INTO `Recommendation` (`Id`, `PlaceName`, `Category`, `RecommendationPlaceName`) VALUES
+(1, 'Corozal, Sucre, Colombia', 8, 'Mercados Corozal - Carrera 25, Corozal - Sucre, Colombia'),
+(2, 'Corozal, Sucre, Colombia', 3, 'Panaderia Corozal - Calle 40, Corozal - Sucre, Colombia'),
+(3, 'Corozal, Sucre, Colombia', 2, 'Panaderia Corozal - Calle 40, Corozal - Sucre, Colombia'),
+(4, 'Corozal, Sucre, Colombia', 1, 'Somewhere'),
+(5, 'Corozal, Sucre, Colombia', 4, 'Barrys Bar'),
+(6, 'Corozal, Sucre, Colombia', 5, 'Disco Inferno'),
+(7, 'Corozal, Sucre, Colombia', 6, 'Del Parque Hotel'),
+(8, 'Corozal, Sucre, Colombia', 7, 'Corozal Cathedral');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `RecommendationCategory`
+--
+
+CREATE TABLE `RecommendationCategory` (
+  `Id` int(11) NOT NULL,
+  `Name` varchar(500) NOT NULL,
+  `Icon` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `RecommendationCategory`
+--
+
+INSERT INTO `RecommendationCategory` (`Id`, `Name`, `Icon`) VALUES
+(1, 'View', 'fa fa-eye'),
+(2, 'Sunset', 'fa fa-eye'),
+(3, 'Food', 'fa fa-cutlery'),
+(4, 'Drink', 'fa fa-beer'),
+(5, 'Party', 'fa fa-users'),
+(6, 'Sleep', 'fa fa-bed'),
+(7, 'Sightseeing', 'fa fa-eye'),
+(8, 'Shopping', 'fa fa-eye');
 
 -- --------------------------------------------------------
 
@@ -53183,7 +53432,225 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`emailaddress`, `username`, `Forename`, `Surname`, `Password`) VALUES
-('barryrimell@gmail.com', 'bazza', 'Barry', 'Rimell', 'password');
+('anon@anon.com', 'anonymous', 'Anon', 'Anon', 'password'),
+('barryrimell@gmail.com', 'bazza', 'Barry', 'Rimell', 'password'),
+('sun@day.com', 'bazza3', '', '', 'password'),
+('sun@day.com', 'bazza4', '', '', 'password'),
+('bazza@web.com', 'bazzaweb', '', '', 'thisisapassword'),
+('bazza@web.com', 'bazzaweb2', '', '', 'thisisapassword'),
+('bazza@web.com', 'bazzaweb21', '', '', 'thisisapassword'),
+('a@b.com', 'brimell', '', '', 'password');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Vote`
+--
+
+CREATE TABLE `Vote` (
+  `Id` int(11) NOT NULL,
+  `UserId` varchar(50) NOT NULL,
+  `JourneySuggestionId` int(50) NOT NULL,
+  `Value` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Vote`
+--
+
+INSERT INTO `Vote` (`Id`, `UserId`, `JourneySuggestionId`, `Value`) VALUES
+(1, 'anonymous', 61, 1),
+(2, 'anonymous', 0, 0),
+(3, 'anonymous', 0, 0),
+(4, 'anonymous', 61, 1),
+(5, 'anonymous', 0, 0),
+(6, 'anonymous', 1, 0),
+(7, 'anonymous', 63, 1),
+(8, 'anonymous', 63, 1),
+(9, 'anonymous', 63, 1),
+(10, 'anonymous', 63, 1),
+(11, 'anonymous', 158, 1),
+(12, 'anonymous', 158, 1),
+(13, 'anonymous', 158, 1),
+(14, 'anonymous', 158, 1),
+(15, 'anonymous', 158, 1),
+(16, 'anonymous', 158, 1),
+(17, 'anonymous', 158, 1),
+(18, 'anonymous', 158, 1),
+(19, 'anonymous', 157, 1),
+(20, 'anonymous', 157, 1),
+(21, 'anonymous', 158, 1),
+(22, 'anonymous', 158, 1),
+(23, 'anonymous', 158, 1),
+(24, 'anonymous', 158, 1),
+(25, 'anonymous', 158, 1),
+(26, 'anonymous', 158, 1),
+(27, 'anonymous', 158, -1),
+(28, 'anonymous', 158, -1),
+(29, 'anonymous', 158, 0),
+(30, 'anonymous', 158, 0),
+(31, 'anonymous', 159, -1),
+(32, 'anonymous', 161, 1),
+(33, 'anonymous', 161, 1),
+(34, 'anonymous', 63, 1),
+(35, 'anonymous', 63, -1),
+(36, 'anonymous', 63, 1),
+(37, 'anonymous', 63, -1),
+(38, 'anonymous', 63, 1),
+(39, 'anonymous', 69, 1),
+(40, 'anonymous', 69, 1),
+(41, 'anonymous', 69, 1),
+(42, 'anonymous', 69, 1),
+(43, 'anonymous', 69, 1),
+(44, 'anonymous', 63, 1),
+(45, 'anonymous', 63, -1),
+(46, 'anonymous', 63, -1),
+(47, 'anonymous', 63, -1),
+(48, 'anonymous', 63, -1),
+(49, 'anonymous', 63, 1),
+(50, 'anonymous', 63, 1),
+(51, 'anonymous', 63, -1),
+(52, 'anonymous', 63, -1),
+(53, 'anonymous', 63, 1),
+(54, 'anonymous', 63, 1),
+(55, 'anonymous', 158, 1),
+(56, 'anonymous', 158, 1),
+(57, 'anonymous', 158, 1),
+(58, 'anonymous', 158, 1),
+(59, 'anonymous', 158, 1),
+(60, 'anonymous', 158, 1),
+(61, 'anonymous', 158, 1),
+(62, 'anonymous', 158, 1),
+(63, 'anonymous', 158, -1),
+(64, 'anonymous', 158, 1),
+(65, 'anonymous', 158, -1),
+(66, 'anonymous', 158, -1),
+(67, 'anonymous', 158, -1),
+(68, 'anonymous', 158, 1),
+(69, 'anonymous', 158, 1),
+(70, 'anonymous', 158, 1),
+(71, 'anonymous', 158, 1),
+(72, 'anonymous', 158, 1),
+(73, 'anonymous', 158, 1),
+(74, 'anonymous', 158, -1),
+(75, 'anonymous', 158, -1),
+(76, 'anonymous', 158, -1),
+(77, 'anonymous', 158, -1),
+(78, 'anonymous', 158, -1),
+(79, 'anonymous', 158, -1),
+(80, 'anonymous', 158, -1),
+(81, 'anonymous', 158, 1),
+(82, 'anonymous', 158, 1),
+(83, 'anonymous', 158, 1),
+(84, 'anonymous', 158, 1),
+(85, 'anonymous', 158, 1),
+(86, 'anonymous', 69, 1),
+(87, 'anonymous', 69, -1),
+(88, 'anonymous', 69, -1),
+(89, 'anonymous', 69, 1),
+(90, 'anonymous', 158, 1),
+(91, 'anonymous', 158, -1),
+(92, 'anonymous', 158, -1),
+(93, 'anonymous', 158, -1),
+(94, 'anonymous', 158, 1),
+(95, 'anonymous', 158, -1),
+(96, 'anonymous', 158, 1),
+(97, 'anonymous', 158, 1),
+(98, 'anonymous', 158, 1),
+(99, 'anonymous', 158, 1),
+(100, 'anonymous', 69, 1),
+(101, 'anonymous', 69, 1),
+(102, 'anonymous', 69, -1),
+(103, 'anonymous', 158, 1),
+(104, 'anonymous', 158, -1),
+(105, 'anonymous', 158, -1),
+(106, 'anonymous', 158, -1),
+(107, 'anonymous', 158, 1),
+(108, 'anonymous', 158, -1),
+(109, 'anonymous', 158, -1),
+(110, 'anonymous', 158, -1),
+(111, 'anonymous', 158, -1),
+(112, 'anonymous', 158, 1),
+(113, 'anonymous', 158, -1),
+(114, 'anonymous', 158, -1),
+(115, 'anonymous', 158, -1),
+(116, 'anonymous', 158, -1),
+(117, 'anonymous', 158, 1),
+(118, 'anonymous', 158, 1),
+(119, 'anonymous', 158, -1),
+(120, 'anonymous', 158, -1),
+(121, 'anonymous', 158, -1),
+(122, 'anonymous', 158, -1),
+(123, 'anonymous', 158, -1),
+(124, 'anonymous', 158, -1),
+(125, 'anonymous', 158, -1),
+(126, 'anonymous', 158, 1),
+(127, 'anonymous', 69, 1),
+(128, 'anonymous', 69, -1),
+(129, 'anonymous', 158, -1),
+(130, 'anonymous', 138, 1),
+(131, 'anonymous', 138, -1),
+(132, 'anonymous', 138, -1),
+(133, 'anonymous', 138, -1),
+(134, 'anonymous', 138, -1),
+(135, 'anonymous', 138, -1),
+(136, 'anonymous', 138, -1),
+(137, 'anonymous', 138, -1),
+(138, 'anonymous', 138, -1),
+(139, 'anonymous', 138, -1),
+(140, 'anonymous', 138, -1),
+(141, 'anonymous', 138, -1),
+(142, 'anonymous', 138, -1),
+(143, 'anonymous', 138, -1),
+(144, 'anonymous', 138, -1),
+(145, 'anonymous', 138, -1),
+(146, 'anonymous', 158, -1),
+(147, 'anonymous', 69, 1),
+(148, 'anonymous', 69, 1),
+(149, 'anonymous', 69, 1),
+(150, 'anonymous', 69, 1),
+(151, 'anonymous', 69, -1),
+(152, 'anonymous', 69, 1),
+(153, 'anonymous', 69, 1),
+(154, 'anonymous', 69, 1),
+(155, 'anonymous', 69, -1),
+(156, 'anonymous', 69, 1),
+(157, 'anonymous', 69, 1),
+(158, 'anonymous', 69, -1),
+(159, 'anonymous', 69, -1),
+(160, 'anonymous', 166, 1),
+(161, 'anonymous', 166, 1),
+(162, 'anonymous', 166, -1),
+(163, 'anonymous', 166, 1),
+(164, 'anonymous', 168, 1),
+(165, 'anonymous', 168, -1),
+(166, 'anonymous', 168, 1),
+(167, 'anonymous', 169, 1),
+(168, 'anonymous', 169, -1),
+(169, 'anonymous', 167, -1),
+(170, 'anonymous', 167, 1),
+(171, 'anonymous', 167, -1),
+(172, 'anonymous', 167, -1),
+(173, 'anonymous', 167, -1),
+(174, 'anonymous', 167, 1),
+(175, 'anonymous', 167, -1),
+(176, 'anonymous', 167, 1),
+(177, 'anonymous', 167, -1),
+(178, 'anonymous', 167, 1),
+(179, 'anonymous', 167, -1),
+(180, 'anonymous', 167, -1),
+(181, 'anonymous', 167, -1),
+(182, 'anonymous', 167, -1),
+(183, 'anonymous', 167, -1),
+(184, 'anonymous', 167, -1),
+(185, 'anonymous', 167, -1),
+(186, 'anonymous', 167, 1),
+(187, 'anonymous', 167, 1),
+(188, 'anonymous', 167, -1),
+(189, 'anonymous', 157, -1),
+(190, 'anonymous', 69, 1),
+(191, 'anonymous', 158, 1),
+(192, 'anonymous', 182, 1);
 
 --
 -- Indexes for dumped tables
@@ -53238,6 +53705,18 @@ ALTER TABLE `Mode`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `Recommendation`
+--
+ALTER TABLE `Recommendation`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- Indexes for table `RecommendationCategory`
+--
+ALTER TABLE `RecommendationCategory`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `states`
 --
 ALTER TABLE `states`
@@ -53247,7 +53726,14 @@ ALTER TABLE `states`
 -- Indexes for table `User`
 --
 ALTER TABLE `User`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`username`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `Vote`
+--
+ALTER TABLE `Vote`
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -53277,7 +53763,7 @@ ALTER TABLE `Journey`
 -- AUTO_INCREMENT for table `JourneySuggestion`
 --
 ALTER TABLE `JourneySuggestion`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 --
 -- AUTO_INCREMENT for table `JourneySuggestionLeg`
 --
@@ -53292,12 +53778,24 @@ ALTER TABLE `leg`
 -- AUTO_INCREMENT for table `Mode`
 --
 ALTER TABLE `Mode`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `Recommendation`
+--
+ALTER TABLE `Recommendation`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `RecommendationCategory`
+--
+ALTER TABLE `RecommendationCategory`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4121;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- AUTO_INCREMENT for table `Vote`
+--
+ALTER TABLE `Vote`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
